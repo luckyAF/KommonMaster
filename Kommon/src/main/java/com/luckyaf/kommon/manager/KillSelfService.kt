@@ -34,7 +34,6 @@ class KillSelfService :Service(){
     var handler: Handler
         private set
 
-
     init {
         handler = Handler()
     }

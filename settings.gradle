@@ -1,1 +1,1 @@
-include ':app', ':Kommon'
+include ':app', ':kommon'

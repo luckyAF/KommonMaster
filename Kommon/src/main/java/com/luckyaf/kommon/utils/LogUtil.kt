@@ -10,8 +10,8 @@ import java.util.*
  * @author Created by luckyAF on 2018/10/11
  *
  */
-class LogUtil {
-    companion object {
+object LogUtil {
+
         private var IS_DEBUG : Boolean = BuildConfig.DEBUG
         private val TAG = BuildConfig.APPLICATION_ID
         private val TOP_BORDER = "********************************************************************************************************************************************"
@@ -72,11 +72,5 @@ class LogUtil {
             newMsg += "\n$BOTTOM_BORDER"
             return newMsg
         }
-    }
-
-
-
-
-
 
 }
