@@ -48,7 +48,7 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * 初始化数据
      */
-    abstract fun initData()
+    abstract fun initData(savedInstanceState: Bundle?)
 
     /**
      * 初始化页面
@@ -83,12 +83,13 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initData(savedInstanceState)
         doBeforeSetContentView()
         setContentView(getLayoutId())
         if (useEventBus()) {
             EventBus.getDefault().register(this)
         }
-        initData()
+
         if (enableNetworkTip()) {
             initTipView()
         }

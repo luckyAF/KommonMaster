@@ -8,7 +8,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.luckyaf.kommonmaster"
-        minSdkVersion rootProject.ext.android.minSdkVersion
+        minSdkVersion 19
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
@@ -29,9 +29,12 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(":kommon")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation rootProject.ext.supportLibs
 
     // RxJava2
     implementation rootProject.ext.rxJavaLibs
     implementation rootProject.ext.commonLibs
+
+
 }

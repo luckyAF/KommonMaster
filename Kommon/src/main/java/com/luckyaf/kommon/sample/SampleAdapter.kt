@@ -1,14 +1,11 @@
 package com.luckyaf.kommon.sample
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.view.View
 import android.widget.TextView
 import com.luckyaf.kommon.R
 import com.luckyaf.kommon.utils.ToastUtil
-import com.luckyaf.kommon.view.recyclerview.ViewHolder
-import com.luckyaf.kommon.view.recyclerview.adapter.CommonAdapter
+import com.luckyaf.kommon.widget.recyclerview.ViewHolder
+import com.luckyaf.kommon.widget.recyclerview.adapter.CommonAdapter
 
 /**
  * 类描述：

@@ -1,13 +1,18 @@
 package com.luckyaf.kommonmaster
 
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.luckyaf.kommon.base.BaseActivity
 import com.luckyaf.kommon.extension.clickWithTrigger
+import com.luckyaf.kommon.widget.popup.SmartPopup
+import com.luckyaf.kommon.widget.popup.XGravity
+import com.luckyaf.kommon.widget.popup.YGravity
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -15,7 +20,11 @@ import java.util.*
 
 class MainActivity : BaseActivity() {
 
+
     override fun getLayoutId(): Int = R.layout.activity_main
+
+    override fun initData(savedInstanceState: Bundle?) {
+    }
 
     override fun initView() {
         setSupportActionBar(toolbar)
@@ -26,10 +35,25 @@ class MainActivity : BaseActivity() {
         btnDelegate.clickWithTrigger {
             TestDelegateActivity.jumpFrom(instance,Date().toString())
         }
+
+        btnPopDown.clickWithTrigger {
+            SmartPopup.create(this)
+                    .setContentView(R.layout.pop_test)
+                    .apply()
+                    .showAsDropDown(it,YGravity.BELOW,XGravity.CENTER,0)
+        }
+
+        btnPopCenter.clickWithTrigger {
+            SmartPopup.create(this)
+                    .setContentView(R.layout.pop_test)
+                    .apply()
+                    .showAtLocation(it,Gravity.CENTER,0,0)
+        }
+
+
       }
 
-    override fun initData() {
-     }
+
 
     override fun start() {
     }

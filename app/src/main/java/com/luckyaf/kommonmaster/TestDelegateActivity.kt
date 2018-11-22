@@ -29,12 +29,13 @@ class TestDelegateActivity : BaseActivity() {
     }
 
     override fun getLayoutId(): Int = R.layout.activity_test_delegate
+    override fun initData(savedInstanceState: Bundle?) {
+    }
 
     override fun initView() {
      }
 
-    override fun initData() {
-    }
+
 
     override fun start() {
         txtTime.text = time

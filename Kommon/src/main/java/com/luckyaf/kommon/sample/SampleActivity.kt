@@ -16,8 +16,11 @@ import com.luckyaf.kommon.extension.put
  *
  */
 class SampleActivity : BaseActivity(){
+    override fun initData(savedInstanceState: Bundle?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
-     fun showMessage() {
+    fun showMessage() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -47,11 +50,6 @@ class SampleActivity : BaseActivity(){
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initData() {
-
-
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     override fun start() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

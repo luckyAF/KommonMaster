@@ -1,13 +1,12 @@
-package com.luckyaf.kommon.view.recyclerview.adapter
+package com.luckyaf.kommon.widget.recyclerview.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 
-import com.luckyaf.kommon.view.recyclerview.MultipleType
-import com.luckyaf.kommon.view.recyclerview.ViewHolder
+import com.luckyaf.kommon.widget.recyclerview.MultipleType
+import com.luckyaf.kommon.widget.recyclerview.ViewHolder
 
 /**
  * 类描述：

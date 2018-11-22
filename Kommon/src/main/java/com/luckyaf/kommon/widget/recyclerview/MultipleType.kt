@@ -1,4 +1,4 @@
-package com.luckyaf.kommon.view.recyclerview
+package com.luckyaf.kommon.widget.recyclerview
 
 /**
  * 类描述：

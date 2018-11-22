@@ -2,9 +2,9 @@ package com.luckyaf.kommon.sample
 
 import android.content.Context
 import com.luckyaf.kommon.R
-import com.luckyaf.kommon.view.recyclerview.MultipleType
-import com.luckyaf.kommon.view.recyclerview.ViewHolder
-import com.luckyaf.kommon.view.recyclerview.adapter.CommonAdapter
+import com.luckyaf.kommon.widget.recyclerview.MultipleType
+import com.luckyaf.kommon.widget.recyclerview.ViewHolder
+import com.luckyaf.kommon.widget.recyclerview.adapter.CommonAdapter
 
 /**
  * 类描述：

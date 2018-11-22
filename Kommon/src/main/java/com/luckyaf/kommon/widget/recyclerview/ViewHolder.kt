@@ -1,4 +1,4 @@
-package com.luckyaf.kommon.view.recyclerview
+package com.luckyaf.kommon.widget.recyclerview
 
 import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
