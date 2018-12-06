@@ -12,7 +12,7 @@ import org.greenrobot.eventbus.EventBus
 
 
 /**
- * 类描述：
+ * 类描述：网络广播
  * <p>
  * 需添加的权限
  * {@code  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>}

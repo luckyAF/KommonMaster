@@ -1,13 +1,14 @@
 package com.luckyaf.kommonmaster
 
-import android.os.Build
+import android.app.NotificationChannel
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
+
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import com.luckyaf.kommon.base.BaseActivity
 import com.luckyaf.kommon.extension.clickWithTrigger
 import com.luckyaf.kommon.widget.popup.SmartPopup
@@ -17,11 +18,15 @@ import com.luckyaf.kommon.widget.popup.YGravity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
+import com.luckyaf.kommon.extension.jumpTo
+
 
 class MainActivity : BaseActivity() {
 
 
     override fun getLayoutId(): Int = R.layout.activity_main
+
+
 
     override fun initData(savedInstanceState: Bundle?) {
     }
@@ -50,6 +55,14 @@ class MainActivity : BaseActivity() {
                     .showAtLocation(it,Gravity.CENTER,0,0)
         }
 
+        btnNotification.clickWithTrigger {
+            jumpTo<TestNotificationActivity>()
+        }
+
+        btFinger.clickWithTrigger {
+            jumpTo<TestFingerprintActivity>()
+        }
+
 
       }
 
@@ -57,6 +70,7 @@ class MainActivity : BaseActivity() {
 
     override fun start() {
     }
+
 
 
 

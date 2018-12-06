@@ -52,6 +52,10 @@ private inline fun FragmentManager.transact(action: FragmentTransaction.() -> Un
     }.commit()
 }
 
+
+inline val FragmentActivity.smartJump
+    get() = SmartJump.from(this)
+
 inline fun <reified T : Activity> Activity.jumpTo(params: Bundle? = null) {
     val intent = Intent(this, T::class.java)
     params?.let { intent.putExtras(it) }
@@ -64,7 +68,7 @@ inline fun <reified T : Activity> FragmentActivity.jumpForResult(
 ) {
     val intent = Intent(this, T::class.java)
     params?.let { intent.putExtras(it) }
-    SmartJump.from(this).startForResult(intent, object : SmartJump.Callback {
+    smartJump.startForResult(intent, object : SmartJump.Callback {
         override fun onActivityResult(resultCode: Int, data: Intent?) {
             action(resultCode, data)
         }

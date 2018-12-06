@@ -43,4 +43,23 @@
         app:layout_constraintLeft_toLeftOf="parent"
 
         />
+
+    <Button
+        android:id="@+id/btnNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="显示个通知"
+        app:layout_constraintTop_toBottomOf="@+id/btnPopCenter"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        />
+
+    <Button
+        android:id="@+id/btFinger"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="指纹"
+        app:layout_constraintTop_toBottomOf="@+id/btnNotification"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 </android.support.constraint.ConstraintLayout>

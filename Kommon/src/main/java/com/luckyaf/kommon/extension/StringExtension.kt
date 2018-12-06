@@ -14,6 +14,12 @@ import com.luckyaf.kommon.manager.ActivityManager
  *
  */
 
+fun Any?.toValueString():String{
+    this ?: return "null"
+    return this.toString()
+}
+
+
 fun CharSequence?.isNullOrEmpty(): Boolean = this == null || this.isEmpty()
 
 fun CharSequence?.isNullOrBlank(): Boolean = this == null || this.isBlank()

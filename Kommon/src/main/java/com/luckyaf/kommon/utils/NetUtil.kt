@@ -1,17 +1,10 @@
 package com.luckyaf.kommon.utils
 
-import android.app.DownloadManager.Request.NETWORK_WIFI
-import android.app.DownloadManager.Request.NETWORK_MOBILE
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
-import android.net.Network
-import android.content.Context.CONNECTIVITY_SERVICE
-import android.support.v4.content.ContextCompat.getSystemService
 import android.support.annotation.RequiresPermission
-import android.net.wifi.WifiInfo
-import android.support.v4.content.ContextCompat.getSystemService
 import android.net.wifi.WifiManager
+import com.luckyaf.kommon.constants.NetState
 import java.net.InetAddress
 import java.net.UnknownHostException
 
@@ -22,25 +15,6 @@ import java.net.UnknownHostException
  *
  */
 object NetUtil {
-    /**
-     * 没有连接网络
-     */
-    const val NETWORK_NONE = -1
-
-    /**
-     * 网络状态未知
-     */
-    const val NETWORK_UNKNOWN = 0
-
-    /**
-     * 移动网络
-     */
-    const val NETWORK_MOBILE = 1
-    /**
-     * 无线网络
-     */
-    const val NETWORK_WIFI = 2
-
     /**
      * 获取网络状态
      */
@@ -54,12 +28,12 @@ object NetUtil {
             val activeNetworkInfo = connectivityManager.activeNetworkInfo
             if (activeNetworkInfo != null && activeNetworkInfo.isConnected) {
                 if (activeNetworkInfo.type == ConnectivityManager.TYPE_WIFI) {
-                    return NETWORK_WIFI
+                    return NetState.NETWORK_WIFI
                 } else if (activeNetworkInfo.type == ConnectivityManager.TYPE_MOBILE) {
-                    return NETWORK_MOBILE
+                    return NetState.NETWORK_MOBILE
                 }
             } else {
-                return NETWORK_NONE
+                return NetState.NETWORK_NONE
             }
         } else {
             //获取所有网络连接的信息
@@ -70,14 +44,14 @@ object NetUtil {
                 val networkInfo = connectivityManager.getNetworkInfo(networks[i])
                 if (networkInfo.isConnected) {
                     return if (networkInfo.type == ConnectivityManager.TYPE_MOBILE) {
-                        NETWORK_MOBILE
+                        NetState.NETWORK_MOBILE
                     } else {
-                        NETWORK_WIFI
+                        NetState.NETWORK_WIFI
                     }
                 }
             }
         }
-        return NETWORK_NONE
+        return NetState.NETWORK_NONE
 
 
     }

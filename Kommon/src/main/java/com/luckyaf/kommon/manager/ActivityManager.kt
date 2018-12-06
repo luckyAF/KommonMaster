@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
+import com.luckyaf.kommon.Kommon
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -14,10 +15,10 @@ import java.util.*
  */
 class ActivityManager:Application.ActivityLifecycleCallbacks {
 
-    private lateinit var mContext:Context
+    private  var mContext:Context?=null
     private val activityStack = Stack<WeakReference<Activity>>()
     private var lastJump:Long = 0
-    private var activityForgroundCount:Int = 0
+    private var activityForGroundCount:Int = 0
 
 
 
@@ -32,7 +33,7 @@ class ActivityManager:Application.ActivityLifecycleCallbacks {
      * 获取当前Activity的context
      */
     fun getNowContext(): Context {
-        return this.mContext
+        return this.mContext ?: Kommon.context
     }
 
     fun activityCount() : Int{
@@ -43,7 +44,7 @@ class ActivityManager:Application.ActivityLifecycleCallbacks {
      * 应用是否在后台
      */
     fun isBackground():Boolean{
-        return activityForgroundCount == 0
+        return activityForGroundCount == 0
     }
 
     override fun onActivityPaused(activity: Activity) {
@@ -56,7 +57,7 @@ class ActivityManager:Application.ActivityLifecycleCallbacks {
 
     override fun onActivityStarted(activity: Activity) {
         updateContext(activity)
-        activityForgroundCount ++
+        activityForGroundCount ++
 
     }
 
@@ -68,7 +69,7 @@ class ActivityManager:Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityStopped(activity: Activity) {
-        activityForgroundCount --
+        activityForGroundCount --
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -116,12 +117,15 @@ class ActivityManager:Application.ActivityLifecycleCallbacks {
     }
 
     fun exitApp(){
+        mContext = null
         clearAllActivity()
         System.exit(0)
         android.os.Process.killProcess(android.os.Process.myPid())
     }
 
     fun restartApp(){
-        KillSelfService.restart(mContext,1000)
+        KillSelfService.restart(getNowContext(),1000)
     }
+
+
 }

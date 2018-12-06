@@ -4,6 +4,10 @@
     package="com.luckyaf.kommonmaster">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:allowBackup="true"
@@ -24,6 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".TestDelegateActivity"></activity>
+        <activity android:name=".TestNotificationActivity" />
+        <activity android:name=".TestFingerprintActivity" />
 
 
         <!--AutoSize屏幕适配-->

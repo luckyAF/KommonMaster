@@ -64,10 +64,10 @@ object StatusBarUtil {
             val decorView = activity.window.decorView as ViewGroup
             val fakeStatusBarView = decorView.findViewById<View>(FAKE_STATUS_BAR_VIEW_ID)
             if (fakeStatusBarView != null) {
-                if (fakeStatusBarView!!.visibility === View.GONE) {
-                    fakeStatusBarView!!.visibility = View.VISIBLE
+                if (fakeStatusBarView.visibility == View.GONE) {
+                    fakeStatusBarView.visibility = View.VISIBLE
                 }
-                fakeStatusBarView!!.setBackgroundColor(calculateStatusColor(color, statusBarAlpha))
+                fakeStatusBarView.setBackgroundColor(calculateStatusColor(color, statusBarAlpha))
             } else {
                 decorView.addView(createStatusBarView(activity, color, statusBarAlpha))
             }

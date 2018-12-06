@@ -21,14 +21,15 @@ import org.greenrobot.eventbus.ThreadMode
  * @author Created by luckyAF on 2018/10/10
  *
  */
+@Suppress("unused")
 abstract class BaseActivity : AppCompatActivity() {
 
     val instance by lazy { this } //这里使用了委托，表示只有使用到instance才会执行该段代码
 
-
     /**
      * 网络状态变化的广播
      */
+
     private var mNetworkChangedReceiver: NetworkChangedReceiver? = null
 
 
@@ -157,15 +158,15 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
     override fun onResume() {
+        super.onResume()
         // 动态注册网络变化广播
         mNetworkChangedReceiver = NetworkChangedReceiver()
         mNetworkChangedReceiver?.registerSelf(this)
 
-        super.onResume()
     }
     override fun onPause() {
+        super.onPause()
         mNetworkChangedReceiver?.unregisterSelf(this)
         mNetworkChangedReceiver = null
-        super.onPause()
     }
 }
