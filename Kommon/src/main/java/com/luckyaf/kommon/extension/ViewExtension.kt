@@ -50,9 +50,9 @@ private fun <T : View> T.delayOver(): Boolean {
     var flag = false
     val currentClickTime = System.currentTimeMillis()
     if (currentClickTime - triggerLastTime >= triggerDelay) {
+        triggerLastTime = currentClickTime
         flag = true
     }
-    triggerLastTime = currentClickTime
     return flag
 }
 
@@ -72,15 +72,7 @@ fun <T : View> T.clickWithTrigger(time: Long = 600, block: (T) -> Unit){
     }
 }
 
-/***
- * 设置延迟时间的View扩展
- * @param delay Long 延迟时间，默认600毫秒
- * @return T
- */
-fun <T : View> T.withTrigger(delay: Long = 600): T {
-    triggerDelay = delay
-    return this
-}
+
 
 /***
  * 点击事件的View扩展

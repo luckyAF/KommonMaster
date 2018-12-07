@@ -3,6 +3,7 @@ package com.luckyaf.kommonmaster
 import android.app.NotificationChannel
 import android.app.PendingIntent
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 
@@ -10,6 +11,7 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import com.luckyaf.kommon.base.BaseActivity
+import com.luckyaf.kommon.extension.aboveApi
 import com.luckyaf.kommon.extension.clickWithTrigger
 import com.luckyaf.kommon.widget.popup.SmartPopup
 import com.luckyaf.kommon.widget.popup.XGravity
@@ -69,6 +71,9 @@ class MainActivity : BaseActivity() {
 
 
     override fun start() {
+        aboveApi(Build.VERSION_CODES.O){
+
+        }
     }
 
 
