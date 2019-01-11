@@ -6,5 +6,5 @@ package com.luckyaf.kommon.model
  *
  */
 class BaseResponse<T>(val code: Int,
-                      val msg: String,
+                      val message: String,
                       val data: T)

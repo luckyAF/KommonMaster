@@ -83,7 +83,7 @@ object Logger {
     private fun msgFormat(msg: String): String {
         var showMsg = formatJson(msg)
         if (showMsg.contains("\n")) {
-            showMsg = showMsg.replace("\n".toRegex(), "\n$VERTICAL_DOUBLE_LINE")
+            showMsg = showMsg.replace("\n".toRegex(), "\n ")
         }
         return StringBuilder()
                 .append("  \n")
@@ -99,7 +99,7 @@ object Logger {
                 .appendln()
                 .append(MIDDLE_BORDER)
                 .appendln()
-                .append(VERTICAL_DOUBLE_LINE)
+                .append(" ")
                 .append(showMsg)
                 .appendln()
                 .append(BOTTOM_BORDER)

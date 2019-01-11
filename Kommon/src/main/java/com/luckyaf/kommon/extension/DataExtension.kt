@@ -15,6 +15,15 @@ fun  <T:Any> T.addTo(collection: MutableCollection<T>?){
     collection?.add(this)
 }
 
+
+fun <T:Any> Array<T>.addAllTo(collection: MutableCollection<T>?){
+    collection?.addAll(this)
+}
+
+fun <T:Any> Collection<T>.addAllTo(collection: MutableCollection<T>?){
+    collection?.addAll(this)
+}
+
 fun <T:Any> T.isMemberOf(collection: MutableCollection<T>?) : Boolean{
     collection?:return false
     return collection.contains(this)

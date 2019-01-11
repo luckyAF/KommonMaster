@@ -72,6 +72,5 @@ inline fun <reified T : Activity> FragmentActivity.jumpForResult(
         override fun onActivityResult(resultCode: Int, data: Intent?) {
             action(resultCode, data)
         }
-
     })
 }

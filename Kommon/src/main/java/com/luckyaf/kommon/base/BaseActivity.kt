@@ -67,7 +67,7 @@ abstract class BaseActivity : AppCompatActivity() {
     open fun useEventBus(): Boolean = true
 
     /**
-     * 是否需要显示 TipView
+     * 是否启用网络提示 TipView
      */
     open fun enableNetworkTip(): Boolean = true
 

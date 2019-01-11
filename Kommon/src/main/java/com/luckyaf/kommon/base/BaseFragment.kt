@@ -13,7 +13,7 @@ import org.greenrobot.eventbus.EventBus
  * @author Created by luckyAF on 2018/10/11
  *
  */
-abstract class BaseFragment: Fragment(){
+abstract class BaseFragment : Fragment() {
 
     /**
      * 视图是否加载完毕
@@ -24,16 +24,48 @@ abstract class BaseFragment: Fragment(){
      */
     private var hasLoadData = false
 
+    /**
+     * fragment是否已经在前台
+     */
+    private var isFront = false
+    /**
+     * activity 是否在后台
+     */
+    private var isActivityBackground = false
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(getLayoutId(),null)
+        return inflater.inflate(getLayoutId(), null)
     }
+
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser) {
             lazyLoadDataIfPrepared()
+            onTrueResume()
+        } else {
+            if (isFront) {
+                onTruePause()
+            }
         }
     }
+
+
+    override fun onResume() {
+        super.onResume()
+        if (isActivityBackground && userVisibleHint) {
+            onTrueResume()
+        }
+        isActivityBackground = false
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        onTruePause()
+        isActivityBackground = true
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,11 +84,20 @@ abstract class BaseFragment: Fragment(){
         }
     }
 
+
+    open fun onTrueResume() {
+        isFront = true
+    }
+
+    open fun onTruePause() {
+        isFront = false
+    }
+
     /**
      * 加载布局
      */
     @LayoutRes
-    abstract fun getLayoutId():Int
+    abstract fun getLayoutId(): Int
 
     /**
      * 初始化 ViewI
@@ -64,7 +105,10 @@ abstract class BaseFragment: Fragment(){
     abstract fun initView()
 
 
-    abstract  fun useEventBus():Boolean
+    /**
+     * 是否使用 EventBus
+     */
+    open fun useEventBus(): Boolean = false
 
     abstract fun initData()
 
@@ -73,6 +117,16 @@ abstract class BaseFragment: Fragment(){
      * 懒加载
      */
     abstract fun lazyLoad()
+
+    /**
+     * 页面被杀死后
+     */
+    override fun onDestroyView() {
+        super.onDestroyView()
+        isViewPrepare = false
+        hasLoadData = false
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()
