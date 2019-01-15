@@ -32,7 +32,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private var mNetworkChangedReceiver: NetworkChangedReceiver? = null
 
-
     /**
      * 提示View
      */
@@ -79,6 +78,13 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     open fun doBeforeSetContentView(){
+
+    }
+
+    /**
+     * 假如使用了mvp  在次释放presenter
+     */
+    open fun closeMVP(){
 
     }
 
@@ -132,6 +138,9 @@ abstract class BaseActivity : AppCompatActivity() {
         mLayoutParams.windowAnimations = R.style.anim_float_view // add animations
     }
 
+    /**
+     * 检查网络状态 确认是否要显示tip
+     */
     protected open fun checkNetwork(networkChangedEvent: NetworkChangedEvent) {
         if (enableNetworkTip()) {
             if (networkChangedEvent.isNone()) {
@@ -157,16 +166,29 @@ abstract class BaseActivity : AppCompatActivity() {
             supportFragmentManager.popBackStack()
         }
     }
+
     override fun onResume() {
         super.onResume()
         // 动态注册网络变化广播
-        mNetworkChangedReceiver = NetworkChangedReceiver()
-        mNetworkChangedReceiver?.registerSelf(this)
+        if(enableNetworkTip()){
+            mNetworkChangedReceiver = NetworkChangedReceiver()
+            mNetworkChangedReceiver?.registerSelf(this)
+        }
 
     }
     override fun onPause() {
         super.onPause()
-        mNetworkChangedReceiver?.unregisterSelf(this)
-        mNetworkChangedReceiver = null
+        if(enableNetworkTip()) {
+            mNetworkChangedReceiver?.unregisterSelf(this)
+            mNetworkChangedReceiver = null
+        }
+    }
+
+    override fun onDestroy() {
+        if(useEventBus()) {
+            EventBus.getDefault().unregister(this)
+            closeMVP()
+        }
+        super.onDestroy()
     }
 }

@@ -1,7 +1,7 @@
 package com.luckyaf.kommon.sample
 
-import com.luckyaf.kommon.base.BasePresenter
-import com.luckyaf.kommon.base.BaseView
+import com.luckyaf.kommon.base.IPresenter
+import com.luckyaf.kommon.base.IView
 
 /**
  * 类描述：
@@ -9,10 +9,10 @@ import com.luckyaf.kommon.base.BaseView
  *
  */
 interface SampleContract {
-    interface View : BaseView<Presenter> {
+    interface View : IView {
         fun showMessage()
     }
-    interface Presenter : BasePresenter{
+    interface Presenter : IPresenter<View>{
         fun getData()
     }
 }

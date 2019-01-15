@@ -2,9 +2,9 @@ package com.luckyaf.kommon.sample
 
 import android.content.Context
 import com.luckyaf.kommon.R
-import com.luckyaf.kommon.widget.recyclerview.MultipleType
-import com.luckyaf.kommon.widget.recyclerview.ViewHolder
-import com.luckyaf.kommon.widget.recyclerview.adapter.CommonAdapter
+import com.luckyaf.kommon.widget.adapter.MultipleType
+import com.luckyaf.kommon.widget.adapter.CommonRecyclerHolder
+import com.luckyaf.kommon.widget.adapter.CommonRecyclerAdapter
 
 /**
  * 类描述：
@@ -12,7 +12,7 @@ import com.luckyaf.kommon.widget.recyclerview.adapter.CommonAdapter
  *
  */
 class MultipleAdapter(context: Context, list: ArrayList<SampleData>)
-    :CommonAdapter<SampleData>(context,list,object : MultipleType<SampleData> {
+    : CommonRecyclerAdapter<SampleData>(context,list,object : MultipleType<SampleData> {
     override fun getLayoutId(item: SampleData, position: Int): Int {
        return when {
             item.name == "hh" -> R.layout.adapter_sample
@@ -24,7 +24,7 @@ class MultipleAdapter(context: Context, list: ArrayList<SampleData>)
 
 })
 {
-    override fun bindData(holder: ViewHolder, data: SampleData, position: Int) {
+    override fun bindData(holder: CommonRecyclerHolder, data: SampleData, position: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

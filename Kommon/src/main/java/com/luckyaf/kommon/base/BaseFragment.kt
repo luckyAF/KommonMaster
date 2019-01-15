@@ -127,11 +127,18 @@ abstract class BaseFragment : Fragment() {
         hasLoadData = false
     }
 
+    /**
+     * 假如使用了mvp  在次释放presenter
+     */
+    open fun closeMVP(){
+
+    }
 
     override fun onDestroy() {
-        super.onDestroy()
         if (useEventBus()) {
             EventBus.getDefault().unregister(this)
         }
+        closeMVP()
+        super.onDestroy()
     }
 }

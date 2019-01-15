@@ -2,7 +2,6 @@ package com.luckyaf.kommon.manager.crash
 
 import android.content.Context
 import com.luckyaf.kommon.manager.ActivityManager
-import com.luckyaf.kommon.utils.LogUtil
 import android.os.Looper
 import android.support.v7.app.AlertDialog
 
@@ -68,7 +67,6 @@ class CrashHandler {
 
 
     private fun showCrashDialog(context: Context) {
-        LogUtil.e("CrashHandler", context.packageName)
         AlertDialog.Builder(context)
                 .setCancelable(false)
                 .setTitle("通知")
