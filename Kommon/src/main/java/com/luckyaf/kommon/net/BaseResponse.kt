@@ -1,4 +1,4 @@
-package com.luckyaf.kommon.model
+package com.luckyaf.kommon.net
 
 /**
  * 类描述：

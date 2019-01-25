@@ -1,4 +1,4 @@
-package com.luckyaf.kommon.utils
+package com.luckyaf.kommon.manager
 
 import android.os.Handler
 import android.os.Looper

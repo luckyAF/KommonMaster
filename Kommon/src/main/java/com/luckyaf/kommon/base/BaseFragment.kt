@@ -13,6 +13,7 @@ import org.greenrobot.eventbus.EventBus
  * @author Created by luckyAF on 2018/10/11
  *
  */
+@Suppress("unused")
 abstract class BaseFragment : Fragment() {
 
     /**

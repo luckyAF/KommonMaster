@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import com.luckyaf.kommon.Kommon
+import com.luckyaf.kommon.utils.ToastUtil
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -17,7 +18,7 @@ class ActivityManager:Application.ActivityLifecycleCallbacks {
 
     private  var mContext:Context?=null
     private val activityStack = Stack<WeakReference<Activity>>()
-    private var lastJump:Long = 0
+    private var lastTryExit:Long = 0
     private var activityForGroundCount:Int = 0
 
 
@@ -117,10 +118,19 @@ class ActivityManager:Application.ActivityLifecycleCallbacks {
     }
 
     fun exitApp(){
-        mContext = null
         clearAllActivity()
+        mContext = null
         System.exit(0)
         android.os.Process.killProcess(android.os.Process.myPid())
+    }
+
+    fun tryExit(){
+        if (System.currentTimeMillis() - lastTryExit > 2000 ) {
+            ToastUtil.show(mContext, "再次点击退出程序")
+            lastTryExit = System.currentTimeMillis()
+        } else {
+            exitApp()
+        }
     }
 
     fun restartApp(){

@@ -62,4 +62,12 @@
         app:layout_constraintTop_toBottomOf="@+id/btnNotification"
         app:layout_constraintLeft_toLeftOf="parent"
         />
+    <Button
+        android:id="@+id/btnNet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NetManager"
+        app:layout_constraintTop_toBottomOf="@+id/btFinger"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 </android.support.constraint.ConstraintLayout>

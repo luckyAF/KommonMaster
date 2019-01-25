@@ -1,5 +1,10 @@
 package com.luckyaf.kommon.sample
 
+import com.luckyaf.kommon.net.HttpCallback
+import com.luckyaf.kommon.net.NetManager
+import com.luckyaf.kommon.net.execute
+import java.io.IOException
+
 /**
  * 类描述：
  * @author Created by luckyAF on 2018/10/31
@@ -7,7 +12,10 @@ package com.luckyaf.kommon.sample
  */
 class SamplePresenter :SampleContract.Presenter {
     override fun getData() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+
+
+
     }
 
     override fun start() {

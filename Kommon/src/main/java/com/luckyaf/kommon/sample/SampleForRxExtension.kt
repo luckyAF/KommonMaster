@@ -1,7 +1,9 @@
 package com.luckyaf.kommon.sample
 
+import com.luckyaf.kommon.callback._subscribe
 import com.luckyaf.kommon.extension.addToComposite
 import com.luckyaf.kommon.extension.executeIO
+import io.reactivex.Observable
 
 /**
  * 类描述：
@@ -20,4 +22,25 @@ class Test {
         ).addToComposite(null)
 
     }
+
+
+    fun runSubscribe(){
+        val arrayData = listOf(0..20)
+        Observable.fromArray(arrayData)._subscribe{
+            _onSubscribe {
+
+            }
+            _onComplete {
+
+            }
+            _onError {
+
+            }
+            _onNext {
+
+            }
+        }
+    }
+
+
 }

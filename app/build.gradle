@@ -44,6 +44,8 @@ dependencies {
     implementation "com.android.support:support-annotations:$rootProject.androidSupportVsersion"
     implementation "com.android.support:recyclerview-v7:$rootProject.androidSupportVsersion"
 
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+
     implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
 
 
@@ -58,7 +60,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-scalars:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
 
-    implementation "com.luckyaf:kommon:0.0.6"
+    //implementation "com.luckyaf:kommon:0.0.6"
+    implementation project(":kommon")
+
 
     //implementation rootProject.ext.supportLibs
 

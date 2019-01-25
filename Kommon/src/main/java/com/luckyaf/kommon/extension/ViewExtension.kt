@@ -1,8 +1,13 @@
 package com.luckyaf.kommon.extension
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import java.lang.RuntimeException
 
 
 /**
@@ -92,4 +97,48 @@ fun <T : View> T.longClick(block: (T) -> Boolean) = setOnLongClickListener {
     block(it as T)
 }
 
+/**
+ * 获取View的截图, 支持获取整个RecyclerView列表的长截图
+ * 注意：调用该方法时，请确保View已经测量完毕，如果宽高为0，则将抛出异常
+ */
+fun View.toBitmap(): Bitmap {
+    if (measuredWidth == 0 || measuredHeight == 0) {
+        throw RuntimeException("调用该方法时，请确保View已经测量完毕，如果宽高为0，则抛出异常以提醒！")
+    }
+    return when (this) {
+        is RecyclerView -> {
+            this.scrollToPosition(0)
+            this.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+
+            val bmp = Bitmap.createBitmap(width, measuredHeight, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bmp)
+
+            //draw default bg, otherwise will be black
+            if (background != null) {
+                background.setBounds(0, 0, width, measuredHeight)
+                background.draw(canvas)
+            } else {
+                canvas.drawColor(Color.WHITE)
+            }
+            this.draw(canvas)
+            //恢复高度
+            this.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.AT_MOST))
+            bmp //return
+        }
+        else -> {
+            val screenshot = Bitmap.createBitmap(measuredWidth, measuredHeight, Bitmap.Config.ARGB_4444)
+            val canvas = Canvas(screenshot)
+            if (background != null) {
+                background.setBounds(0, 0, width, measuredHeight)
+                background.draw(canvas)
+            } else {
+                canvas.drawColor(Color.WHITE)
+            }
+            draw(canvas)// 将 view 画到画布上
+            screenshot //return
+        }
+    }
+}
 

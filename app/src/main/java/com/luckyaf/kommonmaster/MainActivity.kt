@@ -62,6 +62,10 @@ class MainActivity : BaseActivity() {
             jumpTo<TestFingerprintActivity>()
         }
 
+        btnNet.clickWithTrigger {
+            jumpTo<TestNetActivity>()
+        }
+
 
       }
 
