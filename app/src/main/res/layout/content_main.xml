@@ -70,4 +70,13 @@
         app:layout_constraintTop_toBottomOf="@+id/btFinger"
         app:layout_constraintLeft_toLeftOf="parent"
         />
+
+    <Button
+        android:id="@+id/btnRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RecyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/btnNet"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 </android.support.constraint.ConstraintLayout>

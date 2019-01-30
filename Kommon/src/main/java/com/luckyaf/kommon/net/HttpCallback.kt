@@ -10,4 +10,7 @@ import java.io.IOException
 interface HttpCallback<T>{
     fun onSuccess(data: T)
     fun onError(e: IOException){}
+    fun onCancel(){}
+    fun onNetError(){}
+    fun onTimeOut(){}
 }

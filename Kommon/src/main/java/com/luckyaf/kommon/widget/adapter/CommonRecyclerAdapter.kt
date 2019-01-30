@@ -17,24 +17,28 @@ abstract class CommonRecyclerAdapter<T>(
     private var mInflater: LayoutInflater? = null
     private var mTypeSupport: MultipleType<T>? = null
 
-    private var mDataSource: ArrayList<T> //条目布局
+    protected var mDataSource: ArrayList<T>
 
     init {
         mInflater = LayoutInflater.from(mContext)
         mDataSource = ArrayList()
     }
 
-    fun updateData(dataList: List<T>){
+    protected fun initData(dataList: List<T>){
+        mDataSource.clear()
+        mDataSource.addAll(dataList)
+    }
+
+    open fun updateData(dataList: List<T>){mTypeSupport
         mDataSource.clear()
         mDataSource.addAll(dataList)
         notifyDataSetChanged()
-
     }
 
     //自带list
     constructor(context: Context, dataList: MutableList<T> ,layoutId:Int) :
             this(context, layoutId) {
-        updateData(dataList)
+        initData(dataList)
     }
 
 
@@ -42,7 +46,7 @@ abstract class CommonRecyclerAdapter<T>(
     constructor(context: Context, dataList: ArrayList<T>, typeSupport: MultipleType<T>) :
             this(context, -1) {
         this.mTypeSupport = typeSupport
-        updateData(dataList)
+        initData(dataList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommonRecyclerHolder {

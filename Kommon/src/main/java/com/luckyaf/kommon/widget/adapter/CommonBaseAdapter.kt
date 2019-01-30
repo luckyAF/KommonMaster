@@ -28,24 +28,28 @@ abstract class CommonBaseAdapter<T>(
         mDataSource.clear()
     }
 
-    fun updateData(dataList: List<T>){
+    protected fun initData(dataList: List<T>){
+        mDataSource.clear()
+        mDataSource.addAll(dataList)
+    }
+
+    open fun updateData(dataList: List<T>){
         mDataSource.clear()
         mDataSource.addAll(dataList)
         notifyDataSetChanged()
-
     }
 
     //自带list
     constructor(context: Context, dataList: MutableList<T>, layoutId:Int) :
             this(context, layoutId) {
-        updateData(dataList)
+        initData(dataList)
     }
 
     //需要多布局
     constructor(context: Context, dataList: MutableList<T>, typeSupport: MultipleType<T>) :
             this(context, -1) {
         this.mTypeSupport = typeSupport
-        updateData(dataList)
+        initData(dataList)
     }
 
     /**

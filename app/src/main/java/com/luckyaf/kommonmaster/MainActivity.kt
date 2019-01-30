@@ -3,6 +3,7 @@ package com.luckyaf.kommonmaster
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.widget.SwipeRefreshLayout
 
 import android.view.Gravity
 import android.view.Menu
@@ -65,6 +66,11 @@ class MainActivity : BaseActivity() {
         btnNet.clickWithTrigger {
             jumpTo<TestNetActivity>()
         }
+
+        btnRecycler.clickWithTrigger {
+            jumpTo<TestRecyclerActivity>()
+        }
+
 
 
       }

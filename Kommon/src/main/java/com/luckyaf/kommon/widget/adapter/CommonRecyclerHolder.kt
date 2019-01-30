@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.luckyaf.kommon.extension.otherwise
+import com.luckyaf.kommon.extension.yes
 
 /**
  * 类描述：
@@ -14,10 +16,17 @@ import android.widget.TextView
  *
  */
 @Suppress("unused")
-class CommonRecyclerHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
+class CommonRecyclerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    companion object {
+        fun create(view: View):CommonRecyclerHolder{
+            return CommonRecyclerHolder(view)
+        }
+    }
+
 
     //用于缓存已找的界面
-    private var mView: SparseArray<View>?=null
+    private var mView: SparseArray<View>? = null
 
     init {
         mView = SparseArray()
@@ -107,6 +116,12 @@ class CommonRecyclerHolder (itemView: View) : RecyclerView.ViewHolder(itemView) 
         return this
     }
 
+    fun setGone(viewId: Int, gone: Boolean): CommonRecyclerHolder {
+        getView<View>(viewId).visibility = gone.yes { View.GONE }.otherwise { View.VISIBLE }
+        return this
+    }
+
+
     /**
      * 设置条目点击事件
      */
@@ -120,7 +135,7 @@ class CommonRecyclerHolder (itemView: View) : RecyclerView.ViewHolder(itemView) 
      * 设置条目长按事件
      */
     fun setOnItemLongClickListener(block: () -> Boolean) {
-        itemView.setOnLongClickListener{
+        itemView.setOnLongClickListener {
             block()
         }
     }

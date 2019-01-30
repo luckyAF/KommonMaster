@@ -1,9 +1,5 @@
 package com.luckyaf.kommon.sample
 
-import com.luckyaf.kommon.net.HttpCallback
-import com.luckyaf.kommon.net.NetManager
-import com.luckyaf.kommon.net.execute
-import java.io.IOException
 
 /**
  * 类描述：
