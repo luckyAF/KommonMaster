@@ -66,6 +66,10 @@ dependencies {
 
     //implementation rootProject.ext.supportLibs
 
+    testImplementation "junit:junit:$rootProject.junitVersion"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.runnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+
 
 
 }

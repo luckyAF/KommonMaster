@@ -5,7 +5,7 @@
 ## 建议自行选取部分代码 拷贝至项目
 
 ## 引入库 （不推荐）
-> implementation 'com.luckyaf:kommon:0.0.6'   // 不建议
+> implementation 'com.luckyaf:kommon:0.0.8'   // 不建议
 
 
 

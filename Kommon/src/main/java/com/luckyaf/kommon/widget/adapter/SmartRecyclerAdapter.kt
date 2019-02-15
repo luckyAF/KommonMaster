@@ -22,8 +22,8 @@ import java.util.ArrayList
  *
  */
 abstract class SmartRecyclerAdapter<T>(
-        private var mContext: Context,
-        private var mLayoutId: Int) : RecyclerView.Adapter<CommonRecyclerHolder>() {
+         var mContext: Context,
+         var mLayoutId: Int) : RecyclerView.Adapter<CommonRecyclerHolder>() {
 
     private val mInflater = LayoutInflater.from(mContext)
     private var mTypeSupport: MultipleType<T>? = null
@@ -45,13 +45,12 @@ abstract class SmartRecyclerAdapter<T>(
     val FOOTER_VIEW = -233333
     val EMPTY_VIEW = -233555
 
-
+    /**                           构造方法                            */
     //自带 list
     constructor(context: Context, dataList: MutableList<T>, layoutId: Int) :
             this(context, layoutId) {
         initData(dataList)
     }
-
     //需要 多布局
     constructor(context: Context, dataList: ArrayList<T>, typeSupport: MultipleType<T>) :
             this(context, -1) {
@@ -59,18 +58,57 @@ abstract class SmartRecyclerAdapter<T>(
         initData(dataList)
     }
 
-
+    /**
+     * 初始化数据
+     */
     private fun initData(dataList: List<T>) {
         mDataSource.clear()
         mDataSource.addAll(dataList)
     }
+    /**                           调用                            */
 
 
+    /**
+     * 更新数据
+     */
     fun updateData(dataList: List<T>) {
         this.mDataSource.clear()
         this.mDataSource.addAll(dataList)
         notifyDataSetChanged()
     }
+
+    /**
+     * 增加数据
+     */
+    fun addData(dataList: List<T>){
+        this.mDataSource.addAll(dataList)
+        notifyDataSetChanged()
+    }
+
+    /**
+     * 替换数据
+     */
+    fun replaceData(oldItem: T, newItem: T) {
+        replaceData(mDataSource.indexOf(oldItem), newItem)
+    }
+
+    /**
+     * 替换数据
+     */
+    fun replaceData(position: Int, item: T) {
+        if (mDataSource.isEmpty()) {
+            return
+        }
+        if (position < 0 || position >= mDataSource.size) {
+            return
+        }
+        mDataSource[position] =  item
+        notifyItemChanged(position)
+    }
+
+
+
+    /**                          实现RecyclerView Adapter的   方法                         */
 
 
     /**
@@ -80,7 +118,8 @@ abstract class SmartRecyclerAdapter<T>(
      */
     override fun getItemCount(): Int {
         var count: Int
-        if (getEmptyViewCount() == 1) {  // 假如要显示emptyView了
+        if (getEmptyViewCount() == 1) {
+            // 假如要显示emptyView了
             count = 1
             if (mHeadAndEmptyEnable && getHeaderLayoutCount() != 0) {
                 count++
@@ -95,9 +134,10 @@ abstract class SmartRecyclerAdapter<T>(
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (getEmptyViewCount() == 1) {   // 假如要显示emptyView
-            // 设置了 header 并且设置了emptyview时 header仍然显示
+        if (getEmptyViewCount() == 1) {
+            // 假如要显示emptyView了
             val header = mHeadAndEmptyEnable && getHeaderLayoutCount() != 0
+            // 设置了 header 是否要显示
             return when (position) {
                 0 -> if (header) {
                     HEADER_VIEW
@@ -119,11 +159,12 @@ abstract class SmartRecyclerAdapter<T>(
         } else {
             var adjPosition = position - numHeaders
             val adapterCount = mDataSource.size
-            if (adjPosition < adapterCount) {   // 如果显示具体数据
+            if (adjPosition < adapterCount) {
+                // 如果显示具体数据
                 return mTypeSupport?.getLayoutId(mDataSource[adjPosition], adjPosition)
                         ?: super.getItemViewType(adjPosition)
             } else {
-                adjPosition = adjPosition - adapterCount
+                adjPosition -= adapterCount
                 val numFooters = getFooterLayoutCount()
                 return if (adjPosition < numFooters) {
                     FOOTER_VIEW

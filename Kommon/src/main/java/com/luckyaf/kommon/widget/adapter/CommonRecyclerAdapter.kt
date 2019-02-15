@@ -10,6 +10,7 @@ import android.view.ViewGroup
  * @author Created by luckyAF on 2018/10/11
  *
  */
+@Suppress("unused")
 abstract class CommonRecyclerAdapter<T>(
         var mContext: Context,
         private var mLayoutId: Int) : RecyclerView.Adapter<CommonRecyclerHolder>() {
@@ -34,6 +35,24 @@ abstract class CommonRecyclerAdapter<T>(
         mDataSource.addAll(dataList)
         notifyDataSetChanged()
     }
+
+    fun replace(oldItem: T, newItem: T) {
+        replace(mDataSource.indexOf(oldItem), newItem)
+    }
+
+    fun replace(position: Int, item: T) {
+        if (mDataSource.isEmpty()) {
+            return
+        }
+        if (position < 0 || position >= mDataSource.size) {
+            return
+        }
+        mDataSource[position] =  item
+        notifyItemChanged(position)
+    }
+
+
+
 
     //自带list
     constructor(context: Context, dataList: MutableList<T> ,layoutId:Int) :
@@ -82,5 +101,7 @@ abstract class CommonRecyclerAdapter<T>(
     override fun getItemCount(): Int {
         return mDataSource.size
     }
+
+
 
 }

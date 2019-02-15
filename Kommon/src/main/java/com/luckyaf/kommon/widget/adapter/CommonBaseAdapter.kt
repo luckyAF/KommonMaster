@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 /**
  * 类描述： 通用BaseAdapter
@@ -77,6 +80,9 @@ abstract class CommonBaseAdapter<T>(
         bindData(viewHolder,mDataSource[position],position)
         return view
     }
+
+
+
 
     override fun getItemViewType(position: Int): Int {
         //多布局问题

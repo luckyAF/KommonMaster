@@ -4,13 +4,28 @@
 	android:layout_width="match_parent"
 	android:layout_height="40dp">
 
+	<FrameLayout
+		android:id="@+id/load_more_load_default"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		>
+		<TextView
+			android:id="@+id/tv"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:text="load more failed"/>
+
+	</FrameLayout>
+
+
 	<LinearLayout
 		android:id="@+id/load_more_loading_view"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:gravity="center"
+		android:visibility="gone"
 		android:orientation="horizontal">
-
 		<ProgressBar
 			android:id="@+id/loading_progress"
 			android:layout_width="wrap_content"
@@ -19,7 +34,6 @@
 			android:layout_marginStart="0dp"
 			android:layout_marginEnd="4dp"
 			/>
-
 		<TextView
 			android:id="@+id/loading_text"
 			android:layout_width="wrap_content"
@@ -35,9 +49,8 @@
 		android:id="@+id/load_more_load_fail_view"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:visibility="gone">
-
-
+		android:visibility="gone"
+		>
 		<TextView
 			android:id="@+id/tv_prompt"
 			android:layout_width="wrap_content"
@@ -52,7 +65,6 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:visibility="gone">
-
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"

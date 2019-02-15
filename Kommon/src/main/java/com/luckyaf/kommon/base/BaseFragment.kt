@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import org.greenrobot.eventbus.EventBus
 
 /**
  * 类描述：
@@ -70,9 +69,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (useEventBus()) {
-            EventBus.getDefault().register(this)
-        }
+
         isViewPrepare = true
         initView()
         lazyLoadDataIfPrepared()
@@ -106,10 +103,6 @@ abstract class BaseFragment : Fragment() {
     abstract fun initView()
 
 
-    /**
-     * 是否使用 EventBus
-     */
-    open fun useEventBus(): Boolean = false
 
     abstract fun initData()
 
@@ -128,18 +121,5 @@ abstract class BaseFragment : Fragment() {
         hasLoadData = false
     }
 
-    /**
-     * 假如使用了mvp  在次释放presenter
-     */
-    open fun closeMVP(){
 
-    }
-
-    override fun onDestroy() {
-        if (useEventBus()) {
-            EventBus.getDefault().unregister(this)
-        }
-        closeMVP()
-        super.onDestroy()
-    }
 }
