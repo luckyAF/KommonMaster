@@ -8,6 +8,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.security.auth.login.LoginException
 
 /**
  * 类描述： 日志
@@ -58,8 +59,9 @@ object Logger {
         var shouldTrace = false
         val stackTrace = Thread.currentThread().stackTrace
         for (stackTraceElement in stackTrace) {
-            val isLogClass = stackTraceElement.className == Logger::class.java.name
-            System.out.println(stackTraceElement.className + " " + stackTraceElement.methodName)
+            val stackTraceClassName = stackTraceElement.className
+            val isLogClass = stackTraceClassName == Logger::class.java.name
+                    || stackTraceClassName == "com.luckyaf.kommon.extension.LogExtensionKt"
             val isLogMethod = stackTraceElement.methodName.toLowerCase().isMemberOf(logMethod)
             val isLog = isLogClass || isLogMethod
             if (shouldTrace && !isLog) {

@@ -1,7 +1,8 @@
 package com.luckyaf.kommon.base
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
-import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +14,14 @@ import android.view.ViewGroup
  *
  */
 @Suppress("unused")
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : Fragment() ,IBaseView{
 
+    companion object {
+        private const val TAG = "BaseFragment"
+        private const val STATE_SAVE_IS_HIDDEN = "STATE_SAVE_IS_HIDDEN"
+    }
+
+    open fun ableLazyLoad():Boolean = false
     /**
      * 视图是否加载完毕
      */
@@ -33,10 +40,60 @@ abstract class BaseFragment : Fragment() {
      */
     private var isActivityBackground = false
 
+    protected lateinit var mActivity: Activity
+    protected lateinit var mInflater: LayoutInflater
+    protected lateinit var mContentView: View
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        mActivity = context as Activity
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (savedInstanceState != null) {
+            val isSupportHidden = savedInstanceState.getBoolean(STATE_SAVE_IS_HIDDEN)
+            fragmentManager?.beginTransaction()?.let {
+                if (isSupportHidden) {
+                    it.hide(this).commitAllowingStateLoss()
+                } else {
+                    it.show(this).commitAllowingStateLoss()
+                }
+            }
+        }
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(getLayoutId(), null)
+        mInflater = inflater
+        setRootLayout(getLayoutId())
+        return mContentView
     }
+
+    override fun setRootLayout(layoutId: Int) {
+        if (layoutId == -1){
+            return
+        }
+        mContentView = mInflater.inflate(layoutId, null)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val bundle = arguments
+        initData(bundle)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        isViewPrepare = true
+        initView(savedInstanceState, mContentView)
+        if(!ableLazyLoad()){
+            start()
+        }else{
+            lazyLoadDataIfPrepared()
+        }
+    }
+
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
@@ -67,17 +124,11 @@ abstract class BaseFragment : Fragment() {
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        isViewPrepare = true
-        initView()
-        lazyLoadDataIfPrepared()
-    }
 
     private fun lazyLoadDataIfPrepared() {
         if (userVisibleHint && isViewPrepare && !hasLoadData) {
-            lazyLoad()
+            start()
             hasLoadData = true
         }
     }
@@ -91,35 +142,23 @@ abstract class BaseFragment : Fragment() {
         isFront = false
     }
 
-    /**
-     * 加载布局
-     */
-    @LayoutRes
-    abstract fun getLayoutId(): Int
 
-    /**
-     * 初始化 ViewI
-     */
-    abstract fun initView()
-
-
-
-    abstract fun initData()
-
-
-    /**
-     * 懒加载
-     */
-    abstract fun lazyLoad()
 
     /**
      * 页面被杀死后
      */
     override fun onDestroyView() {
-        super.onDestroyView()
         isViewPrepare = false
         hasLoadData = false
+        (mContentView.parent as ViewGroup).removeView(mContentView)
+        super.onDestroyView()
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(STATE_SAVE_IS_HIDDEN, isHidden)
+    }
+
 
 
 }

@@ -144,10 +144,10 @@ object StatusBarUtil {
         // 移除半透明矩形,以免叠加
         val fakeStatusBarView = contentView.findViewById<View>(FAKE_STATUS_BAR_VIEW_ID)
         if (fakeStatusBarView != null) {
-            if (fakeStatusBarView!!.visibility === View.GONE) {
-                fakeStatusBarView!!.visibility = View.VISIBLE
+            if (fakeStatusBarView.visibility == View.GONE) {
+                fakeStatusBarView.visibility = View.VISIBLE
             }
-            fakeStatusBarView!!.setBackgroundColor(color)
+            fakeStatusBarView.setBackgroundColor(color)
         } else {
             contentView.addView(createStatusBarView(activity, color))
         }

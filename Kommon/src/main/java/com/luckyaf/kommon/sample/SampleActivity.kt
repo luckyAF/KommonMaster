@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.luckyaf.kommon.R
 import com.luckyaf.kommon.base.BaseActivity
 import com.luckyaf.kommon.delegate.PreferenceDelegate
 import com.luckyaf.kommon.delegate.extraDelegate
 import com.luckyaf.kommon.delegate.preferenceDelegate
 import com.luckyaf.kommon.extension.put
+import kotlinx.android.synthetic.main.layout_recycler_load_more_view.view.*
 
 /**
  * 类描述：
@@ -16,7 +18,7 @@ import com.luckyaf.kommon.extension.put
  *
  */
 class SampleActivity : BaseActivity(){
-    override fun initData(savedInstanceState: Bundle?) {
+    override fun initData(bundle:  Bundle?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -40,13 +42,13 @@ class SampleActivity : BaseActivity(){
     private val id :String by preferenceDelegate(KEY_USER,"haha")
 
 
-    override fun getLayoutId():Int = 10
+    override fun getLayoutId():Int = -1
 
      fun producePresenter(): SamplePresenter {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?, contentView: View) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -55,8 +57,6 @@ class SampleActivity : BaseActivity(){
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-     fun onClick(v: View?) {
-    }
 
     fun jumpToAnother(){
 

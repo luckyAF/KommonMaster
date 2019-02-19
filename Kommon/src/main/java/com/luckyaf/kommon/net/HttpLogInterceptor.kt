@@ -19,12 +19,13 @@ import java.util.concurrent.TimeUnit
  * @author Created by luckyAF on 2019/1/24
  *
  */
-class HttpLogInterceptor @JvmOverloads constructor(var printResponseHeader: Boolean = false, private val logger: Logger = Logger.DEFAULT) : Interceptor {
+class HttpLogInterceptor @JvmOverloads constructor(
+        private val printResponseHeader: Boolean = false,
+        private val logger: Logger = Logger.DEFAULT) : Interceptor {
     private val requestPrefix = "--->"
     private val responsePrefix = "<---"
     interface Logger {
         fun log(message: String)
-
         companion object {
 
             /** A [Logger] defaults output appropriate for the current platform.  */
@@ -42,7 +43,7 @@ class HttpLogInterceptor @JvmOverloads constructor(var printResponseHeader: Bool
         val requestBody = request.body()
         val connection = chain.connection()
         // 1. 请求第一行
-        var requestMessage = "$requestPrefix ${request.method()} ${request.url()} ${if (connection != null) connection.protocol() else ""}\n"
+        var requestMessage = "$requestPrefix ${request.method()} ${request.url()} ${connection?.protocol() ?: ""}\n"
         // 2. 请求头，只拼自定义的头
         requestMessage += header2String(request.headers())
 

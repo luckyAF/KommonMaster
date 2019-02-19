@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import com.luckyaf.kommon.R
-import com.luckyaf.kommon.component.NetworkChangedReceiver
-import com.luckyaf.kommon.event.NetworkChangedEvent
+import com.luckyaf.kommon.constant.NetworkType
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import com.luckyaf.kommon.manager.netstate.NetChangeObserver
+import com.luckyaf.kommon.manager.netstate.NetStateManager
+
 
 /**
  * 类描述：
@@ -19,11 +19,11 @@ import org.greenrobot.eventbus.ThreadMode
  *
  */
 abstract class  SmartActivity :BaseActivity(){
-    /**
-     * 网络状态变化的广播
-     */
 
-    private var mNetworkChangedReceiver: NetworkChangedReceiver? = null
+    /**
+     * 网络观察者
+     */
+    private var mNetChangeObserver: NetChangeObserver? = null
 
     /**
      * 提示View
@@ -31,6 +31,7 @@ abstract class  SmartActivity :BaseActivity(){
     private var mTipView: View?= null
     private lateinit var mWindowManager: WindowManager
     private lateinit var mLayoutParams: WindowManager.LayoutParams
+    private var tipShowing = false
 
     /**
      * 是否使用 EventBus
@@ -50,30 +51,26 @@ abstract class  SmartActivity :BaseActivity(){
     }
 
 
-    override fun doAfterSetContentView(){
-        if (useEventBus()) {
-            EventBus.getDefault().register(this)
-        }
+    override fun doBeforeSetContentView(){
         if (enableNetworkTip()) {
             initTipView()
+            mNetChangeObserver = object :NetChangeObserver{
+                override fun onNetChanged(state: NetworkType) {
+                    checkNetwork(state)
+                }
+            }
         }
     }
 
-    /**
-     * Network Change
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onNetworkChangeEvent(event: NetworkChangedEvent) {
-        checkNetwork(event)
-    }
+
 
 
     /**
      * 初始化 TipView
      */
     private fun initTipView() {
-        mTipView = layoutInflater.inflate(R.layout.kommon_tip_network_error, null)
         mWindowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        mTipView = layoutInflater.inflate(R.layout.kommon_tip_network_error, null)
         mLayoutParams = WindowManager.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -89,16 +86,18 @@ abstract class  SmartActivity :BaseActivity(){
     /**
      * 检查网络状态 确认是否要显示tip
      */
-    protected open fun checkNetwork(networkChangedEvent: NetworkChangedEvent) {
+    protected open fun checkNetwork(netState: NetworkType) {
         if (enableNetworkTip()) {
-            if (networkChangedEvent.isNone()) {
+            if (netState.isNone()) {
                 if (mTipView != null && mTipView?.parent == null) {
                     mWindowManager.addView(mTipView, mLayoutParams)
+                    tipShowing = true
                 }
             } else {
                 doReConnected()
                 if (mTipView != null && mTipView?.parent != null) {
                     mWindowManager.removeView(mTipView)
+                    tipShowing = false
                 }
             }
         }
@@ -108,20 +107,22 @@ abstract class  SmartActivity :BaseActivity(){
         super.onResume()
         // 动态注册网络变化广播
         if(enableNetworkTip()){
-            mNetworkChangedReceiver = NetworkChangedReceiver()
-            mNetworkChangedReceiver?.registerSelf(this)
+            NetStateManager.registerObserver(mNetChangeObserver)
         }
 
     }
     override fun onPause() {
         super.onPause()
         if(enableNetworkTip()) {
-            mNetworkChangedReceiver?.unregisterSelf(this)
-            mNetworkChangedReceiver = null
+            NetStateManager.registerObserver(mNetChangeObserver)
         }
     }
 
+
     override fun onDestroy() {
+        if(tipShowing){
+            mWindowManager.removeViewImmediate(mTipView)
+        }
         if(useEventBus()) {
             EventBus.getDefault().unregister(this)
         }

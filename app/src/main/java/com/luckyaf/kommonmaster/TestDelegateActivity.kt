@@ -29,10 +29,10 @@ class TestDelegateActivity : BaseActivity() {
     }
 
     override fun getLayoutId(): Int = R.layout.activity_test_delegate
-    override fun initData(savedInstanceState: Bundle?) {
+    override fun initData(bundle: Bundle?) {
     }
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?, contentView: View) {
      }
 
 

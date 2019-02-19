@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.luckyaf.kommon.base.BaseActivity
 import com.luckyaf.kommon.extension.aboveApi
 import com.luckyaf.kommon.extension.clickWithTrigger
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
 import com.luckyaf.kommon.extension.jumpTo
+import com.luckyaf.kommon.widget.webview.WebViewActivity
 
 
 class MainActivity : BaseActivity() {
@@ -31,7 +33,7 @@ class MainActivity : BaseActivity() {
     override fun initData(savedInstanceState: Bundle?) {
     }
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?, contentView: View) {
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -71,6 +73,9 @@ class MainActivity : BaseActivity() {
             jumpTo<TestRecyclerActivity>()
         }
 
+        btnWebView.clickWithTrigger {
+            WebViewActivity.openUrl(this,"https://www.zhihu.com")
+        }
 
 
       }

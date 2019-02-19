@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.CancellationSignal
 import android.util.Log
+import android.view.View
 import com.luckyaf.kommon.base.BaseActivity
 import com.luckyaf.kommon.extension.toastShort
 
@@ -24,7 +25,7 @@ class TestFingerprintActivity: BaseActivity() {
 
     override fun getLayoutId() = R.layout.activity_test_fingerprint
 
-    override fun initData(savedInstanceState: Bundle?) {
+    override fun initData(bundle: Bundle?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             mBiometricPrompt = BiometricPrompt.Builder(this)
                     .setTitle("指纹验证")
@@ -65,7 +66,7 @@ class TestFingerprintActivity: BaseActivity() {
         }
     }
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?, contentView: View) {
     }
 
     override fun start() {

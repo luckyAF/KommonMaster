@@ -27,10 +27,10 @@ class TestRecyclerActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_test_recycler
 
 
-    override fun initData(savedInstanceState: Bundle?) {
+    override fun initData(bundle: Bundle?) {
     }
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?, contentView: View) {
         val layoutManager = LinearLayoutManager(instance)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = layoutManager

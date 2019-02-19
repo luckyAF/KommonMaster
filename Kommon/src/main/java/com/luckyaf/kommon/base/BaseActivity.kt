@@ -1,7 +1,10 @@
 package com.luckyaf.kommon.base
 
 import android.os.Bundle
+import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
 
 /**
  * 类描述：
@@ -9,32 +12,10 @@ import android.support.v7.app.AppCompatActivity
  *
  */
 @Suppress("unused")
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() ,IBaseView{
 
     val instance by lazy { this } //这里使用了委托，表示只有使用到instance才会执行该段代码
-
-
-    /**
-     *  布局
-     */
-    abstract fun getLayoutId(): Int
-
-    /**
-     * 初始化数据
-     */
-    abstract fun initData(savedInstanceState: Bundle?)
-
-    /**
-     * 初始化页面
-     */
-    abstract fun initView()
-
-    /**
-     * 开始请求操作
-     */
-    abstract fun start()
-
-
+    private lateinit var mContentView: View
 
     open fun doBeforeSetContentView(){
 
@@ -47,11 +28,19 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initData(savedInstanceState)
         doBeforeSetContentView()
-        setContentView(getLayoutId())
+        setRootLayout(getLayoutId())
         doAfterSetContentView()
-        initView()
+        initView(savedInstanceState,mContentView)
         start()
 
+    }
+
+    override fun setRootLayout(layoutId: Int) {
+        if (layoutId == -1){
+            return
+        }
+        mContentView = LayoutInflater.from(this).inflate(layoutId, null)
+        setContentView(mContentView)
     }
 
 

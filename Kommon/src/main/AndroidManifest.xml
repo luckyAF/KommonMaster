@@ -1,2 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.luckyaf.kommon" />
+    package="com.luckyaf.kommon" >
+
+	<application>
+		<activity
+			android:name=".widget.webview.WebViewActivity"
+			android:launchMode="singleTop"
+			android:screenOrientation="portrait"
+			android:theme="@style/Theme.Design.NoActionBar"
+			/>
+	</application>
+</manifest>

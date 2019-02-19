@@ -31,7 +31,7 @@ class TestNotificationActivity : BaseActivity() {
 
     override fun getLayoutId() = R.layout.activity_test_notification
 
-    override fun initData(savedInstanceState: Bundle?) {
+    override fun initData(bundle: Bundle?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             var channelId = "chat"
             var channelName = "聊天消息"
@@ -49,7 +49,7 @@ class TestNotificationActivity : BaseActivity() {
 
     }
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?, contentView: View) {
         btnMessage.clickWithTrigger {
             sendChatMsg()
         }

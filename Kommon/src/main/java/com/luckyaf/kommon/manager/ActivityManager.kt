@@ -86,6 +86,9 @@ class ActivityManager:Application.ActivityLifecycleCallbacks {
     }
 
 
+    fun getTopActivity():Activity?{
+        return activityStack.last().get()
+    }
 
     // 将当前Activity推入栈中
     fun pushActivity(activity: Activity) {

@@ -5,7 +5,8 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import com.luckyaf.kommon.base.BaseActivity
+import android.view.View
+import com.luckyaf.kommon.base.SmartActivity
 import com.luckyaf.kommon.extension.DEBUG
 import com.luckyaf.kommon.extension.clickWithTrigger
 import com.luckyaf.kommon.extension.toJson
@@ -20,7 +21,9 @@ import kotlinx.coroutines.launch
  * @author Created by luckyAF on 2019/1/25
  *
  */
-class TestNetActivity : BaseActivity() {
+class TestNetActivity : SmartActivity() {
+
+
     private lateinit var viewModel: HttpViewModel
 
     override fun getLayoutId() = R.layout.activity_test_net
@@ -29,7 +32,7 @@ class TestNetActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this).get(HttpViewModel::class.java)
     }
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?, contentView: View) {
         viewModel.data.observe(this, Observer<String> {
             tvResponse.text = it
         })

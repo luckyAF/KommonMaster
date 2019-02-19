@@ -20,6 +20,8 @@ fun Any?.toValueString():String{
 }
 
 
+
+
 fun CharSequence?.isNullOrEmpty(): Boolean = this == null || this.isEmpty()
 
 fun CharSequence?.isNullOrBlank(): Boolean = this == null || this.isBlank()

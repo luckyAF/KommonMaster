@@ -59,6 +59,7 @@ object RomUtil {
     //MIUI V7对应的versionCode是5
     private fun isMIUIV6OrAbove(): Boolean {
         val miuiVersionCodeStr = getSystemProperty("ro.miui.ui.version.code")
+        miuiVersionCodeStr?:return false
         if (!TextUtils.isEmpty(miuiVersionCodeStr)) {
             try {
                 val miuiVersionCode = Integer.parseInt(miuiVersionCodeStr)
