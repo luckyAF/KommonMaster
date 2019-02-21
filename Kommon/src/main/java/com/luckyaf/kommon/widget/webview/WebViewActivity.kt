@@ -17,7 +17,10 @@ import android.webkit.*
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.luckyaf.kommon.R
-import kotlinx.android.synthetic.main.activity_kommon_webview.*
+import android.content.ActivityNotFoundException
+import android.webkit.WebView
+import java.net.URISyntaxException
+
 
 /**
  * 类描述：
@@ -143,8 +146,11 @@ class WebViewActivity : AppCompatActivity() {
     private fun initWebViewClient() {
         mWebView?.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                if (shouldOverrideUrlLoadingByApp(view, url)) {
+                    return true
+                }
 
-                view?.loadUrl(url)
+                //view?.loadUrl(url)
                 // return true: 代表在打开新的 url 是 WebView 就不会再加载这个 url 了
                 //              所有处理都需要在 WebView中操作，包含加载
                 // return false: 则系统就认为上层没有做处理， 接下来还是会继续加载这个 url
@@ -221,6 +227,37 @@ class WebViewActivity : AppCompatActivity() {
         val result = mProgressBar.visibility == View.VISIBLE
         mProgressBar.visibility = View.INVISIBLE
         return result
+    }
+
+
+    /**
+     * 根据url的scheme处理跳转第三方app的业务
+     */
+    private fun shouldOverrideUrlLoadingByApp(view: WebView?, url: String?): Boolean {
+        view?:return false
+        url?:return false
+        if (url.startsWith("http") || url.startsWith("https") || url.startsWith("ftp")) {
+            //不处理http, https, ftp的请求
+            return false
+        }
+        val intent: Intent
+        try {
+            intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+        } catch (e: URISyntaxException) {
+            Toast.makeText(this@WebViewActivity, "链接异常", Toast.LENGTH_SHORT).show()
+
+            return true
+        }
+
+        intent.component = null
+        try {
+            this@WebViewActivity.startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(this@WebViewActivity, "应用未安装", Toast.LENGTH_SHORT).show()
+            return  true
+        }
+
+        return true
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {

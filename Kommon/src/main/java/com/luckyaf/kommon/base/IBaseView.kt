@@ -10,9 +10,9 @@ import android.view.View
  *
  */
 interface IBaseView {
-    fun initData(bundle: Bundle?)
     @LayoutRes fun  getLayoutId(): Int
     fun setRootLayout(@LayoutRes layoutId: Int = -1)
+    fun initData(bundle: Bundle?)
     fun initView(savedInstanceState: Bundle?, contentView: View)
     fun start()
 }

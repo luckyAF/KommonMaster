@@ -3,7 +3,6 @@ package com.luckyaf.kommonmaster
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.widget.SwipeRefreshLayout
 
 import android.view.Gravity
 import android.view.Menu
@@ -30,7 +29,7 @@ class MainActivity : BaseActivity() {
 
 
 
-    override fun initData(savedInstanceState: Bundle?) {
+    override fun initData(bundle: Bundle?) {
     }
 
     override fun initView(savedInstanceState: Bundle?, contentView: View) {
@@ -75,6 +74,10 @@ class MainActivity : BaseActivity() {
 
         btnWebView.clickWithTrigger {
             WebViewActivity.openUrl(this,"https://www.zhihu.com")
+        }
+
+        btnDecoration.clickWithTrigger {
+            jumpTo<TestItemDecorationActivity>()
         }
 
 

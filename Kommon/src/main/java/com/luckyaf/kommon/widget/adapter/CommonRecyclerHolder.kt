@@ -84,29 +84,6 @@ class CommonRecyclerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         return this
     }
 
-    /**
-     * 加载图片资源路径
-     *
-     * @param viewId
-     * @param imageLoader
-     * @return
-     */
-    fun setImagePath(viewId: Int, imageLoader: HolderImageLoader): CommonRecyclerHolder {
-        val iv = getView<ImageView>(viewId)
-        imageLoader.loadImage(iv, imageLoader.path)
-        return this
-    }
-
-    abstract class HolderImageLoader(val path: String) {
-
-        /**
-         * 需要去复写这个方法加载图片
-         *
-         * @param iv
-         * @param path
-         */
-        abstract fun loadImage(iv: ImageView, path: String)
-    }
 
     /**
      * 设置View的Visibility
@@ -137,6 +114,7 @@ class CommonRecyclerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun setOnItemLongClickListener(block: () -> Boolean) {
         itemView.setOnLongClickListener {
             block()
+            true
         }
     }
 

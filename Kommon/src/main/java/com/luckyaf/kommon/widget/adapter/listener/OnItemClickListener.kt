@@ -1,0 +1,12 @@
+package com.luckyaf.kommon.widget.adapter.listener
+
+import android.view.View
+
+/**
+ * 类描述：
+ * @author Created by luckyAF on 2019-02-20
+ *
+ */
+interface OnItemClickListener {
+     fun onItemClick(itemView: View, position: Int)
+}

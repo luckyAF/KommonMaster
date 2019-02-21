@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 
 
@@ -16,44 +15,20 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
  */
 @Suppress("unused")
 abstract class CommonBaseAdapter<T>(
-        private val mContext: Context,
-        private var mLayoutId: Int
+        val mContext: Context,
+        dataList: List<T>?
 ) : BaseAdapter() {
 
-    private var mDataSource: ArrayList<T> //条目布局
-    private var mInflater: LayoutInflater? = null
-    private var mTypeSupport: MultipleType<T>? = null
+    private val mInflater =  LayoutInflater.from(mContext)
+    private val mDataSource: MutableList<T> = dataList?.toMutableList()?:ArrayList()
 
 
-    init {
-        mInflater = LayoutInflater.from(mContext)
-        mDataSource = ArrayList()
-        mDataSource.clear()
-    }
 
-    protected fun initData(dataList: List<T>){
-        mDataSource.clear()
-        mDataSource.addAll(dataList)
-    }
+    /**
+     * 提供itemId
+     */
+    abstract fun getItemLayoutId(viewType: Int): Int
 
-    open fun updateData(dataList: List<T>){
-        mDataSource.clear()
-        mDataSource.addAll(dataList)
-        notifyDataSetChanged()
-    }
-
-    //自带list
-    constructor(context: Context, dataList: MutableList<T>, layoutId:Int) :
-            this(context, layoutId) {
-        initData(dataList)
-    }
-
-    //需要多布局
-    constructor(context: Context, dataList: MutableList<T>, typeSupport: MultipleType<T>) :
-            this(context, -1) {
-        this.mTypeSupport = typeSupport
-        initData(dataList)
-    }
 
     /**
      * 将必要参数传递出去
@@ -70,7 +45,7 @@ abstract class CommonBaseAdapter<T>(
         val viewHolder:CommonViewHolder
         val view: View
         if(null == convertView){
-            view = mInflater!!.inflate(mLayoutId, null)
+            view = mInflater.inflate(getItemLayoutId(getItemViewType(position)), null)
             viewHolder = CommonViewHolder.create(view)
             view.tag = viewHolder
         }else{
@@ -79,15 +54,6 @@ abstract class CommonBaseAdapter<T>(
         }
         bindData(viewHolder,mDataSource[position],position)
         return view
-    }
-
-
-
-
-    override fun getItemViewType(position: Int): Int {
-        //多布局问题
-        return mTypeSupport?.getLayoutId(mDataSource[position], position)
-                ?: super.getItemViewType(position)
     }
 
     override fun getItem(position: Int): T {
