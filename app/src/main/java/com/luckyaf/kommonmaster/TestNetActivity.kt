@@ -80,6 +80,9 @@ class TestNetActivity : SmartActivity() {
                             viewModel.data.postValue(it.data.toJson())
                         }
                     }
+
+
+
                 }
 
     }

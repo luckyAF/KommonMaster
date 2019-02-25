@@ -12,7 +12,7 @@ def gitUrl = 'https://github.com/luckyAF/KommonMaster.git'   //Git仓库的地�
 
 group = "com.luckyaf"//发布aar前缀根节点
 
-version = "0.0.8"//发布aar的库版本
+version = "0.0.9"//发布aar的库版本
 
 android {
     compileSdkVersion 28
@@ -125,7 +125,7 @@ dependencies {
     compileOnly "com.tbruyelle.rxpermissions2:rxpermissions:$rootProject.rxpermissions2Version"
     compileOnly "com.google.code.gson:gson:$rootProject.gsonVersion"
     compileOnly "com.squareup.okhttp3:okhttp:$rootProject.okHttpVersion"
-
+    compileOnly "com.tencent:mmkv:$rootProject.mmkvVersion"
     compileOnly "org.greenrobot:eventbus:$rootProject.eventBusVersion"
 
 
