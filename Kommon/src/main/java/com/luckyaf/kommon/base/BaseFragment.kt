@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 
 /**
- * 类描述：
+ * 类描述：基类fragment
  * @author Created by luckyAF on 2018/10/11
  *
  */
@@ -98,7 +98,9 @@ abstract class BaseFragment : Fragment() ,IBaseView{
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser) {
-            lazyLoadDataIfPrepared()
+            if(ableLazyLoad()){
+                lazyLoadDataIfPrepared()
+            }
             onTrueResume()
         } else {
             if (isFront) {
