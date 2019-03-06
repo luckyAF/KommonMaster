@@ -8,4 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <com.luckyaf.kommon.view.circle.CircleView
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
+
 </LinearLayout>

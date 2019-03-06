@@ -34,6 +34,7 @@ import android.telephony.TelephonyManager.NETWORK_TYPE_GSM
  *
  */
 @Suppress("unused")
+
 object NetworkUtils {
 
     /**
@@ -271,6 +272,13 @@ object NetworkUtils {
         val ipAddress = wifiInfo.ipAddress
         return intToIp(ipAddress)
     }
+
+    fun getConnectWifiName(context: Context): String? {
+        val wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager?
+        val wifiInfo = wifiManager?.connectionInfo
+        return wifiInfo?.ssid
+    }
+
 
     private fun intToIp(i: Int): String {
         return (i and 0xFF).toString() + "." +

@@ -1,5 +1,6 @@
 package com.luckyaf.kommon.utils
 
+import android.app.Activity
 import android.content.Context
 import android.widget.Toast
 
@@ -34,7 +35,9 @@ object ToastUtil {
             TOAST?.cancel()
             TOAST?.setText(text)
         }
-        TOAST?.show()
+        (context as Activity).runOnUiThread {
+            TOAST?.show()
+        }
     }
 
 

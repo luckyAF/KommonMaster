@@ -46,7 +46,7 @@ data class CommonRequest(
         return this
     }
 
-    fun header(key: String, value: Any) :CommonRequest{
+    fun header(key: String, value: Any): CommonRequest {
         this.mHeaders.add(Pair(key, "$value"))
         return this
 
@@ -64,7 +64,7 @@ data class CommonRequest(
         return this
     }
 
-    fun param(key: String, value: Any) :CommonRequest{
+    fun param(key: String, value: Any): CommonRequest {
         this.mParams.add(Pair(key, "$value"))
         return this
     }
@@ -90,8 +90,12 @@ data class CommonRequest(
     private fun buildGetRequest(): Request {
         return Request.Builder().url(urlParams())
                 .apply {
-                    NetManager.globalHeaders.forEach { addHeader(it.first, it.second) }
-                    mHeaders.forEach { addHeader(it.first, it.second) }
+                    NetManager.globalHeaders.forEach {
+                        addHeader(it.first, it.second)
+                    }
+                    mHeaders.forEach {
+                        addHeader(it.first, it.second)
+                    }
                 }
                 .get()
                 .tag(mTag)
@@ -188,14 +192,15 @@ data class CommonRequest(
                     if (e is SocketException) {
                         callback.onCancel()
                     }
-                    if(e is SocketTimeoutException){
+                    if (e is SocketTimeoutException) {
                         callback.onTimeOut()
                     }
-                    if(e is ConnectException){
+                    if (e is ConnectException) {
                         callback.onNetError()
                     }
 
                 }
+
                 override fun onResponse(call: Call, response: Response) {
                     if (response.isSuccessful) {
                         if ("ktx" is T) {
@@ -211,7 +216,6 @@ data class CommonRequest(
         }
 
     }
-
 
 
     inline fun <reified T> doRequest(): Deferred<T?> {
