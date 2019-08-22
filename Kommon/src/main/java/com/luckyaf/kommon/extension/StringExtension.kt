@@ -1,5 +1,7 @@
 package com.luckyaf.kommon.extension
 
+import java.util.regex.Pattern
+
 import android.graphics.Color
 import android.support.v4.content.ContextCompat
 import android.text.ParcelableSpan
@@ -14,17 +16,52 @@ import com.luckyaf.kommon.manager.ActivityManager
  *
  */
 
-fun Any?.toValueString():String{
-    this ?: return "null"
-    return this.toString()
+
+private val floatPattern = Pattern.compile("^[-\\+]?[.\\d]*$")
+private val intPattern = Pattern.compile("^[-\\+]?[\\d]*$")
+
+
+fun String?.isInteger():Boolean{
+    return if (this.isNullOrEmpty()) {
+        false
+    } else intPattern.matcher(this).matches()
+}
+
+fun String?.isFloat():Boolean{
+    return if (this.isNullOrEmpty()) {
+        false
+    } else floatPattern.matcher(this).matches()
+}
+
+fun String?.isNumber():Boolean{
+    return isInteger() || isFloat()
 }
 
 
+fun String.safeSubstring(startIndex: Int, endIndex: Int = this.length) :String{
+    if(startIndex > length){
+        return ""
+    }
+    if(endIndex < 0){
+        return ""
+    }
+    val start = if (startIndex < 0) {
+        0
+    } else {
+        startIndex
+    }
+    val end = if (endIndex > length) {
+        length
+    }else{
+        endIndex
+    }
+    return if(start > end){
+        this.substring(end,start).reversed()
+    }else{
+        this.substring(start,end)
+    }
+}
 
-
-fun CharSequence?.isNullOrEmpty(): Boolean = this == null || this.isEmpty()
-
-fun CharSequence?.isNullOrBlank(): Boolean = this == null || this.isBlank()
 
 private fun CharSequence.setSpan(span: ParcelableSpan, start: Int, end: Int): SpannableString {
     val spannableString = SpannableString(this)

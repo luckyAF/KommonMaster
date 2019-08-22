@@ -9,7 +9,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import com.luckyaf.kommon.base.BaseActivity
 import android.graphics.BitmapFactory
 import android.support.v4.app.NotificationCompat
 import android.view.View
@@ -23,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_test_notification.*
  * @author Created by luckyAF on 2018/11/28
  *
  */
-class TestNotificationActivity : BaseActivity() {
+class TestNotificationActivity : SmartActivity() {
 
 
     private var mContentViewBig: RemoteViews? = null
@@ -31,7 +30,7 @@ class TestNotificationActivity : BaseActivity() {
 
     override fun getLayoutId() = R.layout.activity_test_notification
 
-    override fun initData(bundle: Bundle?) {
+    override fun initData(bundle: Bundle) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             var channelId = "chat"
             var channelName = "聊天消息"
@@ -49,7 +48,7 @@ class TestNotificationActivity : BaseActivity() {
 
     }
 
-    override fun initView(savedInstanceState: Bundle?, contentView: View) {
+    override fun initView(savedInstanceState: Bundle, contentView: View) {
         btnMessage.clickWithTrigger {
             sendChatMsg()
         }

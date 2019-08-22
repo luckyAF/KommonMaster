@@ -3,7 +3,7 @@
 
 	<application>
 		<activity
-			android:name=".widget.webview.WebViewActivity"
+			android:name=".widget.WebViewActivity"
 			android:launchMode="singleTop"
 			android:screenOrientation="portrait"
 			android:theme="@style/Theme.Design.NoActionBar"

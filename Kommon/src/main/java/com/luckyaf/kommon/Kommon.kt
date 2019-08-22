@@ -11,18 +11,22 @@ import kotlin.properties.Delegates
  *
  */
 
-class Kommon private constructor(){
+object Kommon {
 
-    companion object {
-        var context :Context  by Delegates.notNull()
-            private set
-        var appName:String by Delegates.notNull()
-            private set
+    var context: Context  by Delegates.notNull()
+        private set
+    var appName: String by Delegates.notNull()
+        private set
 
-        fun init(application: Application){
-            context = application
-            appName = application.packageName
-            application.registerActivityLifecycleCallbacks(ActivityManager.instance)
-        }
+    fun init(application: Application) {
+        context = application
+        appName = application.packageName
+        application.registerActivityLifecycleCallbacks(ActivityManager.instance)
     }
+
+    fun clear() {
+
+    }
+
+
 }

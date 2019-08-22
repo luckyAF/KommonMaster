@@ -1,8 +1,4 @@
 <resources>
     <string name="app_name">Kommon</string>
 
-
-    <!-- tip -->
-    <string name="network_unavailable_tip">网络连接不可用,请检查网络设置!</string>
-
 </resources>

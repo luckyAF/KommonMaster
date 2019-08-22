@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">KommonMaster</string>
     <string name="action_settings">Settings</string>
+
+
+    <!-- tip -->
+    <string name="network_unavailable_tip">网络连接不可用,请检查网络设置!</string>
+
 </resources>

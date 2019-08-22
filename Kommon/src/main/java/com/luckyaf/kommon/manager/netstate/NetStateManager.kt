@@ -8,9 +8,6 @@ import com.luckyaf.kommon.manager.netstate.NetStateReceiver.Companion.ANDROID_NE
 import com.luckyaf.kommon.manager.netstate.NetStateReceiver.Companion.CUSTOM_ANDROID_NET_CHANGE_ACTION
 import android.content.Intent
 
-
-
-
 /**
  * 类描述：
  * @author Created by luckyAF on 2019-02-18
@@ -20,35 +17,39 @@ import android.content.Intent
 object NetStateManager {
     private var mNetChangeObservers = ArrayList<NetChangeObserver>()
     private var isNetAvailable = false
-    private var netState = NetworkType.NETWORK_UNKNOWN
     private var mBroadcastReceiver:BroadcastReceiver ?=null
 
 
     /**
      * 注册
-     * @param mContext
+     *
+     * @param context context
      */
-    fun registerNetworkStateReceiver(mContext: Context) {
-        if(null ==mBroadcastReceiver){
+    fun registerNetworkStateReceiver(context: Context) {
+        if (null == mBroadcastReceiver) {
             mBroadcastReceiver = NetStateReceiver.instance
         }
         val filter = IntentFilter()
         filter.addAction(CUSTOM_ANDROID_NET_CHANGE_ACTION)
         filter.addAction(ANDROID_NET_CHANGE_ACTION)
-        mContext.applicationContext.registerReceiver(mBroadcastReceiver, filter)
+        context.applicationContext.registerReceiver(mBroadcastReceiver, filter)
     }
 
     /**
      * 清除广播
-     * @param mContext
+     *
+     * @param context context
      */
-    fun unRegisterNetworkStateReceiver(mContext: Context) {
+    fun unRegisterNetworkStateReceiver(context: Context) {
         if (mBroadcastReceiver != null) {
             try {
-                mContext.applicationContext.unregisterReceiver(mBroadcastReceiver)
+                context.applicationContext.unregisterReceiver(mBroadcastReceiver)
             } catch (e: Exception) {
+                e.printStackTrace()
             }
+
         }
+        mNetChangeObservers.clear()
     }
 
 
@@ -70,13 +71,6 @@ object NetStateManager {
         }
     }
 
-    fun isNetworkAvailable(): Boolean {
-        return isNetAvailable
-    }
-
-    fun getNetType(): NetworkType {
-        return netState
-    }
 
 
     /**

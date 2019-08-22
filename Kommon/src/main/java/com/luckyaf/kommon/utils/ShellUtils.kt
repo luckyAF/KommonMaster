@@ -1,6 +1,5 @@
 package com.luckyaf.kommon.utils
 
-import com.luckyaf.kommon.extension.isNullOrEmpty
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.IOException

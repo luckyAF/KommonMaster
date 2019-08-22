@@ -6,12 +6,11 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.View
-import com.luckyaf.kommon.base.SmartActivity
-import com.luckyaf.kommon.extension.DEBUG
-import com.luckyaf.kommon.extension.clickWithTrigger
-import com.luckyaf.kommon.extension.toJson
-import com.luckyaf.kommon.extension.yes
-import com.luckyaf.kommon.net.NetManager
+import com.luckyaf.kommon.callback._subscribe
+import com.luckyaf.kommon.extension.*
+import com.luckyaf.kommon.http.SmartHttp
+import com.luckyaf.kommon.http.callback.CommonCallback
+import com.luckyaf.kommon.http.internal.DefaultParser
 import kotlinx.android.synthetic.main.activity_test_net.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -28,11 +27,11 @@ class TestNetActivity : SmartActivity() {
 
     override fun getLayoutId() = R.layout.activity_test_net
 
-    override fun initData(savedInstanceState: Bundle?) {
+    override fun initData(savedInstanceState: Bundle) {
         viewModel = ViewModelProviders.of(this).get(HttpViewModel::class.java)
     }
 
-    override fun initView(savedInstanceState: Bundle?, contentView: View) {
+    override fun initView(savedInstanceState: Bundle, contentView: View) {
         viewModel.data.observe(this, Observer<String> {
             tvResponse.text = it
         })
@@ -41,6 +40,12 @@ class TestNetActivity : SmartActivity() {
         }
         btnPost.clickWithTrigger {
             testPost()
+        }
+        btnZhuhu.clickWithTrigger {
+            testZhihu()
+        }
+        btnRxGet.clickWithTrigger {
+            testRxGet()
         }
         viewModel.isLoading.observe(this, Observer {
             it?.yes {
@@ -55,37 +60,79 @@ class TestNetActivity : SmartActivity() {
 
 
     private fun testGet() {
-        GlobalScope.launch {
-            val result = NetManager.get()
-                    .url("http://traceback.openhema.com/trace/login")
-                    .params("username" to "test003",
-                            "password" to 333333
-                    )
-                    .request<RestResult<ProductListBean>>().await()
-            result.DEBUG("result")
+        launchIO(
+                {
+                    SmartHttp.get()
+                            .url("http://traceback.openhema.com/trace/login")
+                            .params("username" to "test003",
+                                    "password" to 333333
+                            )
+                            .suspendRequest<RestResult<ProductListBean>>()
+                }, {
+
+            showMessage("成功")
+
+        }, {
+            it.DEBUG("exception")
+            showMessage(it.message ?: "异常")
         }
-
-
+        )
     }
 
     private fun testPost() {
-        NetManager.post()
+        SmartHttp.post()
                 .url("http://traceback.openhema.com/trace/product/list")
                 .params("warehouseId" to 7,
                         "token" to "9fe19ef3baa9b935783719c7316afb22"
                 ).request<RestResult<ProductListBean>> {
                     success {
-                        it.DEBUG()
-                        if (it.status == 0) {
+                        showMessage("成功")
+                        if (it?.status == 0) {
                             viewModel.data.postValue(it.data.toJson())
                         }
+
                     }
+                    error {
+                        showMessage(it.message ?: "失败")
 
-
-
+                    }
                 }
 
     }
+
+
+    private fun testZhihu() {
+        SmartHttp.get()
+                .url("http://news-at.zhihu.com/api/4/news/latest")
+                .request<ZhihuDaily> {
+                    success {
+                        it?.date.DEBUG()
+                        showMessage("成功")
+                    }
+                    error {
+                        showMessage(it.message?:"异常")
+                    }
+                }
+
+    }
+
+    private fun testRxGet(){
+        SmartHttp.get()
+                .url("http://news-at.zhihu.com/api/4/news/latest")
+                .asObservable<ZhihuDaily>()
+                .applySchedulers()
+                ._subscribe {
+                    _onNext {
+                        showMessage("成功")
+                    }
+                    _onError {
+                        it.DEBUG("失败")
+                    }
+                }
+
+    }
+
+
 
     class HttpViewModel : ViewModel() {
         val data = MutableLiveData<String>()

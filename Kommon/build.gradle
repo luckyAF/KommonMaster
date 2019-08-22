@@ -3,8 +3,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.hujiang.android-aspectjx'
+
 
 
 def siteUrl = 'https://github.com/luckyAF/KommonMaster' //项目在github主页地址
@@ -12,24 +13,24 @@ def gitUrl = 'https://github.com/luckyAF/KommonMaster.git'   //Git仓库的地�
 
 group = "com.luckyaf"//发布aar前缀根节点
 
-version = "0.1.1"//发布aar的库版本
+version = "0.2.1"//发布aar的库版本
 
 android {
     compileSdkVersion 28
-
-
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
+        multiDexEnabled true
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -105,14 +106,13 @@ bintray {
     }
 }
 
-
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.kotlinCoroutinesVersion"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.kotlinCoroutinesVersion"
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
     api "org.jetbrains.kotlin:kotlin-reflect:$rootProject.kotlinVersion"
+
     api "com.android.support:appcompat-v7:$rootProject.androidSupportVsersion"
     api "com.android.support:cardview-v7:$rootProject.androidSupportVsersion"
     api "com.android.support:design:$rootProject.androidSupportVsersion"
@@ -127,6 +127,15 @@ dependencies {
     api "com.squareup.okhttp3:okhttp:$rootProject.okHttpVersion"
     api "com.tencent:mmkv:$rootProject.mmkvVersion"
     api "org.greenrobot:eventbus:$rootProject.eventBusVersion"
+    api "com.alibaba:fastjson:$rootProject.fastjsonVersion"   // fastjson
+
+
+    // test
+    testImplementation "junit:junit:$rootProject.junitVersion"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.runnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanaryVersion"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakcanaryVersion"
 
 
 
