@@ -3,6 +3,7 @@ package com.luckyaf.kommon
 import android.app.Application
 import android.content.Context
 import com.luckyaf.kommon.manager.ActivityManager
+import com.luckyaf.kommon.manager.netstate.NetStateManager
 import kotlin.properties.Delegates
 
 /**
@@ -21,11 +22,12 @@ object Kommon {
     fun init(application: Application) {
         context = application
         appName = application.packageName
+        NetStateManager.registerNetworkStateReceiver(application)
         application.registerActivityLifecycleCallbacks(ActivityManager.instance)
     }
 
     fun clear() {
-
+        NetStateManager.unRegisterNetworkStateReceiver(context)
     }
 
 

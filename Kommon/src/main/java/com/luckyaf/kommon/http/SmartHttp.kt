@@ -68,13 +68,13 @@ object SmartHttp {
 
     fun cancelTag(tag: Any?) {
         tag?.let {
-            val queuedCalls = mOkHttpClient.dispatcher().queuedCalls()
+            val queuedCalls = mOkHttpClient.dispatcher.queuedCalls()
             for (call in queuedCalls) {
                 if (tag === call.request().tag()) {
                     call.cancel()
                 }
             }
-            val runningCalls = mOkHttpClient.dispatcher().runningCalls()
+            val runningCalls = mOkHttpClient.dispatcher.runningCalls()
             for (call in runningCalls) {
                 if (tag === call.request().tag()) {
                     call.cancel()
@@ -85,11 +85,11 @@ object SmartHttp {
 
 
     fun cancelAll() {
-        val queuedCalls = mOkHttpClient.dispatcher().queuedCalls()
+        val queuedCalls = mOkHttpClient.dispatcher.queuedCalls()
         for (call in queuedCalls) {
             call.cancel()
         }
-        val runningCalls = mOkHttpClient.dispatcher().runningCalls()
+        val runningCalls = mOkHttpClient.dispatcher.runningCalls()
         for (call in runningCalls) {
             call.cancel()
         }

@@ -101,6 +101,7 @@ class TestNotificationActivity : SmartActivity() {
                 .setAutoCancel(true)
                 .build()
         manager.notify(2, notification)
+
     }
 
     /**

@@ -24,7 +24,7 @@ class UploadRequestBody(
     private val limitSpeed: Int?
 ) : RequestBody() {
 
-    private var countingSink: CountingSink? = null
+    private lateinit var countingSink: CountingSink
     private val mLoopSend: Disposable?
     private val notifyInterval = 300
     private var currentSize: Long = 0
@@ -66,7 +66,7 @@ class UploadRequestBody(
         try {
             countingSink = CountingSink(sink)
             //  SuperInputStream  inputStream = new SuperInputStream(responseBody.source().inputStream(),limitSpeed,readListener);
-            val bufferedSink = Okio.buffer(countingSink)
+            val bufferedSink = countingSink.buffer()
             requestBody.writeTo(bufferedSink)
             bufferedSink.flush()
         } catch (e: IOException) {

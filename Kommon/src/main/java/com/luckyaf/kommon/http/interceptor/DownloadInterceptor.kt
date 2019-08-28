@@ -31,11 +31,11 @@ class DownloadInterceptor : Interceptor {
         //拦截
         val originalResponse = chain.proceed(chain.request())
         //包装响应体并返回
-        return if (null == originalResponse.body()) {
+        return if (null == originalResponse.body) {
             originalResponse
         } else {
             originalResponse.newBuilder()
-                .body(DownloadResponseBody.upgrade(originalResponse.body()!!, speedLimit, callback))
+                .body(DownloadResponseBody.upgrade(originalResponse.body!!, speedLimit, callback))
                 .build()
         }
 

@@ -20,15 +20,15 @@ buildscript {
         mmkvVersion = '1.0.19'
 
         // rx   dependencies
-        rxJavaVersion = '2.2.3'
+        rxJavaVersion = '2.2.6'
         rxAndroidVersion = '2.1.1'
         rxpermissions2Version = '0.9.5@aar'
 
         // network dependencies
         retrofitVersion = '2.4.0'
-        okHttpVersion = '3.12.0'
+        okHttpVersion = '4.1.0'
         gsonVersion = '2.8.5'
-        fastjsonVersion = '1.2.51'
+        fastjsonVersion = '1.2.59'
 
         // test
         junitVersion = '4.12'
@@ -44,8 +44,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.0'
-        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.4'
-
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4' //添加此行
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1' //添加此行
@@ -57,11 +55,13 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenLocal()
         google()
         jcenter()
         maven { url "https://maven.google.com" }
         maven { url 'https://jitpack.io' }
     }
+
 }
 
 task clean(type: Delete) {

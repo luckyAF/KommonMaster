@@ -1,20 +1,18 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
     defaultConfig {
         applicationId "com.luckyaf.kommonmaster"
-        minSdkVersion 19
+        minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
-
         multiDexEnabled true
     }
     buildTypes {
@@ -25,51 +23,14 @@ android {
     }
 }
 
+kapt {
+    generateStubs = true
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0"
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$rootProject.kotlinVersion"
-
-    implementation "com.android.support:appcompat-v7:$rootProject.androidSupportVsersion"
-    implementation "com.android.support:cardview-v7:$rootProject.androidSupportVsersion"
-    implementation "com.android.support:design:$rootProject.androidSupportVsersion"
-    implementation "com.android.support:support-annotations:$rootProject.androidSupportVsersion"
-    implementation "com.android.support:recyclerview-v7:$rootProject.androidSupportVsersion"
-
-    implementation "android.arch.lifecycle:extensions:1.1.1"
-
-    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
-
-
-    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
-    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
-    implementation "com.tbruyelle.rxpermissions2:rxpermissions:$rootProject.rxpermissions2Version"
-
-    implementation "org.greenrobot:eventbus:$rootProject.eventBusVersion"
-
-    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-scalars:$rootProject.retrofitVersion"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
-
     //implementation "com.luckyaf:kommon:0.0.6"
     implementation project(":kommon")
-
-
-    //implementation rootProject.ext.supportLibs
-
-    testImplementation "junit:junit:$rootProject.junitVersion"
-    androidTestImplementation "com.android.support.test:runner:$rootProject.runnerVersion"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
-
-
-
 }
+
+

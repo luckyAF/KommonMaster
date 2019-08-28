@@ -9,11 +9,7 @@ import android.view.View
 import com.luckyaf.kommon.callback._subscribe
 import com.luckyaf.kommon.extension.*
 import com.luckyaf.kommon.http.SmartHttp
-import com.luckyaf.kommon.http.callback.CommonCallback
-import com.luckyaf.kommon.http.internal.DefaultParser
 import kotlinx.android.synthetic.main.activity_test_net.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 /**
  * 类描述：
@@ -107,6 +103,9 @@ class TestNetActivity : SmartActivity() {
                 .request<ZhihuDaily> {
                     success {
                         it?.date.DEBUG()
+                        it?.let {
+                            showData(it)
+                        }
                         showMessage("成功")
                     }
                     error {
@@ -123,6 +122,7 @@ class TestNetActivity : SmartActivity() {
                 .applySchedulers()
                 ._subscribe {
                     _onNext {
+                        showData(it)
                         showMessage("成功")
                     }
                     _onError {
@@ -130,6 +130,10 @@ class TestNetActivity : SmartActivity() {
                     }
                 }
 
+    }
+
+    fun showData(data:ZhihuDaily){
+        viewModel.data.value = data.date
     }
 
 

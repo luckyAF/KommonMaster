@@ -20,17 +20,15 @@ class MainActivity :SmartActivity(){
     override fun initData(bundle: Bundle) {
 
     }
+    override fun enableNetworkTip() = true
 
     override fun initView(savedInstanceState: Bundle, contentView: View) {
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                    .setAction("Action", null)
+                    .show()
         }
-
-
-
-
 
         btnNotification.clickWithTrigger {
             jumpTo<TestNotificationActivity>()
@@ -47,8 +45,6 @@ class MainActivity :SmartActivity(){
         btnWebView.clickWithTrigger {
             WebViewActivity.openUrl(this,"https://www.zhihu.com")
         }
-
-
     }
 
     override fun start() {

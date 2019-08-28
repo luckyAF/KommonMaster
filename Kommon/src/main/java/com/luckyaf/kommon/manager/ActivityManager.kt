@@ -21,8 +21,6 @@ class ActivityManager:Application.ActivityLifecycleCallbacks {
     private var lastTryExit:Long = 0
     private var activityForGroundCount:Int = 0
 
-
-
     companion object {
         val instance: ActivityManager by lazy { ActivityManager() }
     }

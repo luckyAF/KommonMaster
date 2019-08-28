@@ -9,7 +9,7 @@
 
 ## TODO
 
-- [ ] AOP注解框架引入
+- [x] AOP注解框架引入 (改为独立项目GoodAt)
 - [ ] 网络请求 download和upload测试
 - [ ] 更完整的Sample
 - [ ] 更丰富的架构模版

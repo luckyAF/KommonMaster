@@ -4,7 +4,7 @@ import com.luckyaf.kommon.BuildConfig
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response
-import okhttp3.internal.http.HttpHeaders
+import okhttp3.internal.http.promisesBody
 import okhttp3.internal.platform.Platform
 import okio.Buffer
 import okio.GzipSource
@@ -53,17 +53,17 @@ class HttpLogInterceptor @JvmOverloads constructor(
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        val requestBody = request.body()
+        val requestBody = request.body
         val connection = chain.connection()
         // 1. 请求第一行
-        var requestMessage = "$requestPrefix ${request.method()} ${request.url()} ${connection?.protocol() ?: ""}\n"
+        var requestMessage = "$requestPrefix ${request.method} ${request.url} ${connection?.protocol() ?: ""}\n"
         // 2. 请求头，只拼自定义的头
-        requestMessage += header2String(request.headers())
+        requestMessage += header2String(request.headers)
 
 
         // 3. 请求体
-        if (bodyHasUnknownEncoding(request.headers())) {
-            requestMessage += "\n$requestPrefix END ${request.method()} (encoded body omitted)"
+        if (bodyHasUnknownEncoding(request.headers)) {
+            requestMessage += "\n$requestPrefix END ${request.method} (encoded body omitted)"
         } else if (requestBody != null) {
             val buffer = Buffer()
             requestBody.writeTo(buffer)
@@ -76,12 +76,12 @@ class HttpLogInterceptor @JvmOverloads constructor(
             requestMessage += "\n"
             if (isPlaintext(buffer)) {
                 requestMessage += buffer.readString(charset!!)
-                requestMessage += "\n$requestPrefix END ${request.method()}"
+                requestMessage += "\n$requestPrefix END ${request.method}"
             } else {
-                requestMessage += "\n$requestPrefix END ${request.method()} (binary ${requestBody.contentLength()} -byte body omitted)"
+                requestMessage += "\n$requestPrefix END ${request.method} (binary ${requestBody.contentLength()} -byte body omitted)"
             }
         } else {
-            requestMessage += "\n$requestPrefix END ${request.method()} (no request body)"
+            requestMessage += "\n$requestPrefix END ${request.method} (no request body)"
         }
         // 4. 打印请求信息
         logger.log(requestMessage)
@@ -96,22 +96,22 @@ class HttpLogInterceptor @JvmOverloads constructor(
         }
 
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
-        val responseBody = response.body()
+        val responseBody = response.body
         val contentLength = responseBody!!.contentLength()
         val bodySize = if (contentLength != -1L) contentLength.toString() + "-byte" else "unknown-length"
-        var responseMessage = "$responsePrefix ${response.code()} ${if (response.message().isEmpty()) "" else response.message()} "
-        responseMessage += response.request().url()
+        var responseMessage = "$responsePrefix ${response.code} ${if (response.message.isEmpty()) "" else response.message} "
+        responseMessage += response.request.url
         responseMessage += " (" + tookMs + "ms" + ", $bodySize body)\n"
 
         // 是否拼接打印头
-        val headers = response.headers()
+        val headers = response.headers
         if (printResponseHeader){
             responseMessage += header2String(headers)
         }
 
-        if (!HttpHeaders.hasBody(response)) {
+        if (!response.promisesBody()) {
             responseMessage += "\n$responsePrefix END HTTP"
-        } else if (bodyHasUnknownEncoding(response.headers())) {
+        } else if (bodyHasUnknownEncoding(response.headers)) {
             responseMessage += "\n$responsePrefix END HTTP (encoded body omitted)"
         } else {
             val source = responseBody.source()
@@ -120,7 +120,7 @@ class HttpLogInterceptor @JvmOverloads constructor(
 
             var gzippedLength: Long? = null
             if ("gzip".equals(headers.get("Content-Encoding"), ignoreCase = true)) {
-                gzippedLength = buffer.size()
+                gzippedLength = buffer.size
                 GzipSource(buffer.clone()).use { gzippedResponseBody ->
                     buffer = Buffer()
                     buffer.writeAll(gzippedResponseBody)
@@ -135,7 +135,7 @@ class HttpLogInterceptor @JvmOverloads constructor(
 
             responseMessage += "\n"
             if (!isPlaintext(buffer)) {
-                responseMessage += "\n$responsePrefix END HTTP (binary " + buffer.size() + "-byte body omitted)"
+                responseMessage += "\n$responsePrefix END HTTP (binary " + buffer.size + "-byte body omitted)"
                 return response
             }
 
@@ -150,9 +150,9 @@ class HttpLogInterceptor @JvmOverloads constructor(
             }
 
             responseMessage += if (gzippedLength != null) {
-                "\n$responsePrefix END HTTP (" + buffer.size() + "-byte, $gzippedLength-gzipped-byte body)"
+                "\n$responsePrefix END HTTP (" + buffer.size + "-byte, $gzippedLength-gzipped-byte body)"
             } else {
-                "\n$responsePrefix END HTTP (" + buffer.size() + "-byte body)"
+                "\n$responsePrefix END HTTP (" + buffer.size + "-byte body)"
             }
         }
         logger.log(responseMessage)
@@ -161,7 +161,7 @@ class HttpLogInterceptor @JvmOverloads constructor(
 
     private fun header2String(headers: Headers): String {
         var i = 0
-        val count = headers.size()
+        val count = headers.size
         var headerStr = ""
         while (i < count) {
             val name = headers.name(i)
@@ -191,7 +191,7 @@ class HttpLogInterceptor @JvmOverloads constructor(
         internal fun isPlaintext(buffer: Buffer): Boolean {
             try {
                 val prefix = Buffer()
-                val byteCount = if (buffer.size() < 64) buffer.size() else 64
+                val byteCount = if (buffer.size < 64) buffer.size else 64
                 buffer.copyTo(prefix, 0, byteCount)
                 for (i in 0..15) {
                     if (prefix.exhausted()) {
