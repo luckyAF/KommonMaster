@@ -22,6 +22,7 @@ import java.util.Set;
  *
  * @author Created by luckyAF on 2019-08-24
  */
+@SuppressWarnings("unused")
 public class PermissionManager {
 
     private static PermissionManager permissionManager;

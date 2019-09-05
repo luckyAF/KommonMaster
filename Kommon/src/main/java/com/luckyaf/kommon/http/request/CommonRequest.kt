@@ -3,6 +3,7 @@ package com.luckyaf.kommon.http.request
 import android.os.Handler
 import android.os.Looper
 import com.alibaba.fastjson.JSONObject
+import com.google.gson.JsonObject
 import com.luckyaf.kommon.extension.mediaType
 import com.luckyaf.kommon.extension.toJavaBean
 import com.luckyaf.kommon.http.SmartHttp
@@ -345,7 +346,9 @@ data class CommonRequest(
 
     private fun getJsonString(): String {
         val jsonObject = JSONObject()
+
         mParams.forEach {
+
             jsonObject[it.first] = it.second
         }
         return jsonObject.toJSONString()

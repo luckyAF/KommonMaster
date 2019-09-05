@@ -2,12 +2,6 @@
 <resources>
 
 
-    <!-- 浮动窗口动画 -->
-    <style name="anim_float_view">
-        <item name="android:windowEnterAnimation">@anim/kommon_push_up_in</item>
-        <item name="android:windowExitAnimation">@anim/kommon_push_up_out</item>
-    </style>
-
 
 
 </resources>

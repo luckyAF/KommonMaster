@@ -28,7 +28,7 @@ buildscript {
         retrofitVersion = '2.4.0'
         okHttpVersion = '4.1.0'
         gsonVersion = '2.8.5'
-        fastjsonVersion = '1.2.59'
+        fastjsonVersion = '1.2.51'
 
         // test
         junitVersion = '4.12'

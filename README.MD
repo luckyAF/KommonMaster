@@ -5,7 +5,7 @@
 ## 建议自行选取部分代码 拷贝至项目
 
 ## 引入库 
-> implementation 'com.luckyaf:kommon:0.2.1'   
+> implementation 'com.luckyaf:kommon:0.2.2'   
 
 ## TODO
 

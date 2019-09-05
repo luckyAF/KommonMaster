@@ -1,5 +1,7 @@
 package com.luckyaf.kommon.http.interceptor
 
+import android.Manifest
+import android.support.annotation.RequiresPermission
 import android.text.TextUtils
 import com.luckyaf.kommon.Kommon
 import com.luckyaf.kommon.utils.NetworkUtils
@@ -28,6 +30,7 @@ class DefaultCacheInterceptor(cacheTime: Int, unit: TimeUnit) : Interceptor {
     }
 
     @Throws(IOException::class)
+    @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()//获取请求
         //这里就是说判读我们的网络条件，要是有网络的话我么就直接获取网络上面的数据，
