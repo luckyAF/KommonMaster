@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.hardware.SensorManager
 import com.luckyaf.kommon.BuildConfig
+import com.luckyaf.kommon.Kommon
 import com.luckyaf.kommon.manager.shake.ShakeDetector
 import com.luckyaf.kommon.mvi.IIntent
 import com.luckyaf.kommon.mvi.IntentView
@@ -21,7 +22,7 @@ object ShakeManager {
     private const val SHAKE_DELAY = 1000L
 
     fun init(context: Context) {
-        if (!BuildConfig.DEBUG) {
+        if (!Kommon.DEBUG) {
             return
         }
         if (mShakeDetector != null) {
@@ -34,7 +35,7 @@ object ShakeManager {
     }
 
     fun clear() {
-        if (!BuildConfig.DEBUG) {
+        if (!Kommon.DEBUG) {
             return
         }
         mShakeDetector?.stop()
@@ -44,7 +45,7 @@ object ShakeManager {
 
 
     private fun shake() {
-        if (!BuildConfig.DEBUG) {
+        if (!Kommon.DEBUG) {
             return
         }
         if (mShowing) {

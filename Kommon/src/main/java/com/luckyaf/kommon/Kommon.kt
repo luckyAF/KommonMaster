@@ -2,6 +2,7 @@ package com.luckyaf.kommon
 
 import android.app.Application
 import android.content.Context
+import android.os.Debug
 import com.luckyaf.kommon.manager.ActivityManager
 import com.luckyaf.kommon.manager.netstate.NetStateManager
 import kotlin.properties.Delegates
@@ -19,7 +20,10 @@ object Kommon {
     var appName: String by Delegates.notNull()
         private set
 
-    fun init(application: Application) {
+    var DEBUG:Boolean = BuildConfig.DEBUG
+
+    fun init(application: Application,debug: Boolean = false) {
+        DEBUG = debug
         context = application
         appName = application.packageName
         NetStateManager.registerNetworkStateReceiver(application)
@@ -29,6 +33,8 @@ object Kommon {
     fun clear() {
         NetStateManager.unRegisterNetworkStateReceiver(context)
     }
+
+
 
 
 }

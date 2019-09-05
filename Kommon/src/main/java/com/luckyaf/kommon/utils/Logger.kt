@@ -2,6 +2,7 @@ package com.luckyaf.kommon.utils
 
 import android.util.Log
 import com.luckyaf.kommon.BuildConfig
+import com.luckyaf.kommon.Kommon
 import com.luckyaf.kommon.extension.isMemberOf
 import org.json.JSONArray
 import org.json.JSONException
@@ -29,7 +30,7 @@ object Logger {
     private val MIDDLE_BORDER = MIDDLE_CORNER + SINGLE_LINE + SINGLE_LINE
 
     private const val TAG = BuildConfig.APPLICATION_ID
-    private var debug = BuildConfig.DEBUG//是否打印log
+    private var debug = Kommon.DEBUG//是否打印log
     private var timeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
 
     private val logMethod = Arrays.asList(

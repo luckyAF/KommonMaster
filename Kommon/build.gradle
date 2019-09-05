@@ -14,7 +14,7 @@ def gitUrl = 'https://github.com/luckyAF/KommonMaster.git'   //Git仓库的地�
 
 group = "com.luckyaf"//发布aar前缀根节点
 
-version = "0.2.2"//发布aar的库版本
+version = "0.2.5"//发布aar的库版本
 
 android {
     compileSdkVersion 28
@@ -139,8 +139,6 @@ dependencies {
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "com.android.support.test:runner:$rootProject.runnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanaryVersion"
-    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.leakcanaryVersion"
 
     // 悬浮窗：https://github.com/getActivity/XToast
     // 网络请求：https://github.com/zhou-you/RxEasyHttp

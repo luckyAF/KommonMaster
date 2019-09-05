@@ -1,6 +1,7 @@
 package com.luckyaf.kommon.http.interceptor
 
 import com.luckyaf.kommon.BuildConfig
+import com.luckyaf.kommon.Kommon
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -41,7 +42,7 @@ class HttpLogInterceptor @JvmOverloads constructor(
             }
 
             fun providerLogger():Logger{
-                return if(BuildConfig.DEBUG){
+                return if(Kommon.DEBUG){
                     DEBUG
                 }else{
                     RELEASE

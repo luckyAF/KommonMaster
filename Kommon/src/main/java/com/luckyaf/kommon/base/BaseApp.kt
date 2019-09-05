@@ -8,8 +8,6 @@ import android.content.Context
 import android.os.Build
 import android.support.multidex.MultiDex
 import com.luckyaf.kommon.Kommon
-import com.squareup.leakcanary.LeakCanary
-import com.squareup.leakcanary.RefWatcher
 
 
 
@@ -19,12 +17,7 @@ import com.squareup.leakcanary.RefWatcher
  *
  */
 open class BaseApp : Application() {
-    private lateinit var refWatcher: RefWatcher
     private var hasInitialize = false
-
-    fun getRefWatcher(): RefWatcher? {
-        return refWatcher
-    }
 
     override fun onCreate() {
         super.onCreate()
@@ -34,7 +27,6 @@ open class BaseApp : Application() {
 
     open fun initialize(){
         Kommon.init(this)
-        refWatcher = setupLeakCanary()
 
     }
     open fun clear(){
@@ -76,13 +68,7 @@ open class BaseApp : Application() {
         }
     }
 
-    private fun setupLeakCanary(): RefWatcher {
-        return if (LeakCanary.isInAnalyzerProcess(this)) {
-            RefWatcher.DISABLED
-        } else {
-            LeakCanary.install(this)
-        }
-    }
+
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
