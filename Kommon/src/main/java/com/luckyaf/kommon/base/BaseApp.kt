@@ -7,7 +7,6 @@ import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.support.multidex.MultiDex
-import com.luckyaf.kommon.Kommon
 
 
 
@@ -18,20 +17,18 @@ import com.luckyaf.kommon.Kommon
  */
 open class BaseApp : Application() {
     private var hasInitialize = false
-
     override fun onCreate() {
         super.onCreate()
         hasInitialize = true
+        disableAPIDialog()
         initialize()
     }
 
     open fun initialize(){
-        Kommon.init(this)
-
     }
     open fun clear(){
-        Kommon.clear()
     }
+
 
     internal fun tryReInitialize() {
         if (!hasInitialize) {

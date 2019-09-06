@@ -1,5 +1,6 @@
 package com.luckyaf.kommonmaster
 
+import com.luckyaf.kommon.Kommon
 import com.luckyaf.kommon.base.BaseApp
 
 /**
@@ -10,12 +11,11 @@ import com.luckyaf.kommon.base.BaseApp
 class App : BaseApp() {
 
     override fun initialize() {
-        super.initialize()
+        Kommon.init(this,BuildConfig.DEBUG)
+
     }
 
     override fun clear() {
-        super.clear()
-        BuildConfig.APPLICATION_ID
 
     }
 

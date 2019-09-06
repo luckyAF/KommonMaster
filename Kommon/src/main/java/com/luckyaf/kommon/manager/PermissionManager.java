@@ -131,7 +131,8 @@ public class PermissionManager {
             return;
         }
         // 检查TargetSdk
-        PermissionUtil.checkTargetSdkVersion(mPermissions);
+        //PermissionUtil.checkTargetSdkVersion(mPermissions);
+
         ArrayList<String> needRequest = PermissionUtil.getNeedRequestPermissions(mPermissions);
         if (needRequest == null || needRequest.isEmpty()) {
             // 证明权限已经全部授予过

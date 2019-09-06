@@ -21,6 +21,7 @@ object Kommon {
         private set
 
     var DEBUG:Boolean = BuildConfig.DEBUG
+        private set
 
     fun init(application: Application,debug: Boolean = false) {
         DEBUG = debug
@@ -33,6 +34,8 @@ object Kommon {
     fun clear() {
         NetStateManager.unRegisterNetworkStateReceiver(context)
     }
+
+
 
 
 

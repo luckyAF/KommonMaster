@@ -337,7 +337,7 @@ data class CommonRequest(
             else -> {
                 // form-data url-encoded
                 val builder = FormBody.Builder()
-                mParams.forEach { builder.add(it.first, it.second as String) }
+                mParams.forEach { builder.add(it.first, it.second.toString()) }
                 builder.build()
             }
         }

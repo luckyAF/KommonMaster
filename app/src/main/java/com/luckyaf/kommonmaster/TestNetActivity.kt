@@ -23,7 +23,7 @@ class TestNetActivity : SmartActivity() {
 
     override fun getLayoutId() = R.layout.activity_test_net
 
-    override fun initData(savedInstanceState: Bundle) {
+    override fun initData(bundle: Bundle) {
         viewModel = ViewModelProviders.of(this).get(HttpViewModel::class.java)
     }
 
