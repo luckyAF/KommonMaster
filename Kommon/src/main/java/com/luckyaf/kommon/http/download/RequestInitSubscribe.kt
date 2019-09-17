@@ -23,23 +23,23 @@ class RequestInitSubscribe(private var downloadRequest:DownloadRequest) : Observ
             if (response.isSuccessful) {
                 val urlFileName = FileUtil.getNetFileName(response, downloadRequest.url)
                 var totalSize: Long = -1
-                if (null != response.body) {
-                    val body = response.body
+                if (null != response.body()) {
+                    val body = response.body()
                     totalSize = body!!.contentLength()
                 }
                 if (totalSize == 0L) {
                     emitter.onError(Exception("error file"))
                 }
-                if (null == response.headers.get(HeaderConstant.HEAD_KEY_CONTENT_RANGE)
-                    && null == response.headers.get(HeaderConstant.HEAD_KEY_ACCEPT_RANGES)
+                if (null == response.headers().get(HeaderConstant.HEAD_KEY_CONTENT_RANGE)
+                    && null == response.headers().get(HeaderConstant.HEAD_KEY_ACCEPT_RANGES)
                 ) {
                     downloadRequest.setSupportRange(false)
                 } else {
-                    if (null != response.headers.get(HeaderConstant.HEAD_KEY_LAST_MODIFIED)) {
-                        downloadRequest.lastModify = response.headers.get(HeaderConstant.HEAD_KEY_LAST_MODIFIED) ?:""
+                    if (null != response.headers().get(HeaderConstant.HEAD_KEY_LAST_MODIFIED)) {
+                        downloadRequest.lastModify = response.headers().get(HeaderConstant.HEAD_KEY_LAST_MODIFIED) ?:""
                     }
-                    if (null != response.headers.get(HeaderConstant.HEAD_KEY_E_TAG)) {
-                        downloadRequest.lastModify = response.headers.get(HeaderConstant.HEAD_KEY_E_TAG)?:""
+                    if (null != response.headers().get(HeaderConstant.HEAD_KEY_E_TAG)) {
+                        downloadRequest.lastModify = response.headers().get(HeaderConstant.HEAD_KEY_E_TAG)?:""
                     }
                 }
                 downloadRequest.setTotalSize(totalSize)

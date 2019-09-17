@@ -6,8 +6,6 @@ import okhttp3.MediaType
 import okhttp3.ResponseBody
 import okio.BufferedSource
 import okio.Okio
-import okio.buffer
-import okio.source
 
 /**
  * 类描述：
@@ -43,8 +41,7 @@ class DownloadResponseBody private constructor(
         readListener ?: return responseBody.source()
         val inputStream =
             LimitInputStream(responseBody.source().inputStream(), limitSpeed, readListener)
-        progressSource = inputStream.source().buffer()
-
+        progressSource = Okio.buffer(Okio.source(inputStream))
         return progressSource!!
     }
 

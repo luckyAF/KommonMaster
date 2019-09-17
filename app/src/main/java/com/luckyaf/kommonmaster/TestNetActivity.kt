@@ -71,8 +71,9 @@ class TestNetActivity : SmartActivity() {
         }, {
             it.DEBUG("exception")
             showMessage(it.message ?: "异常")
-        }
-        )
+        })
+
+
     }
 
     private fun testPost() {

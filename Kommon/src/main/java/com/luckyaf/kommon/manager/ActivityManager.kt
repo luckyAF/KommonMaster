@@ -16,7 +16,7 @@ import java.util.*
  */
 class ActivityManager:Application.ActivityLifecycleCallbacks {
 
-    private  var mContext:Context?=null
+    private  var mContext:WeakReference<Context>?=null
     private val activityStack = Stack<WeakReference<Activity>>()
     private var lastTryExit:Long = 0
     private var activityForGroundCount:Int = 0
@@ -32,7 +32,7 @@ class ActivityManager:Application.ActivityLifecycleCallbacks {
      * 获取当前Activity的context
      */
     fun getNowContext(): Context {
-        return this.mContext ?: Kommon.context
+        return this.mContext?.get() ?: Kommon.context
     }
 
     fun activityCount() : Int{
@@ -80,7 +80,7 @@ class ActivityManager:Application.ActivityLifecycleCallbacks {
 
 
     private fun updateContext(activity: Activity) {
-        mContext = activity.parent ?: activity
+        mContext = WeakReference(activity.parent ?: activity)
     }
 
 
@@ -127,7 +127,7 @@ class ActivityManager:Application.ActivityLifecycleCallbacks {
 
     fun tryExit(){
         if (System.currentTimeMillis() - lastTryExit > 2000 ) {
-            ToastUtil.show(mContext, "再次点击退出程序")
+            ToastUtil.show(mContext?.get(), "再次点击退出程序")
             lastTryExit = System.currentTimeMillis()
         } else {
             exitApp()

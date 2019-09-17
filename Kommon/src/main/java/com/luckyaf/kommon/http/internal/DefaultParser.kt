@@ -12,7 +12,7 @@ import okhttp3.Response
  class DefaultParser<T> :Parser<T>{
      override fun onParse(response: Response): T {
         return GsonUtil.provideGson().fromJson(
-                response.body!!.string(),
+                response.body()!!.string(),
                 object : TypeToken<T>() {}.type
         )
     }

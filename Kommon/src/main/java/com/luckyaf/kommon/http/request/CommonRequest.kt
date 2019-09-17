@@ -13,9 +13,6 @@ import com.luckyaf.kommon.http.internal.*
 import io.reactivex.Observable
 import kotlinx.coroutines.CompletableDeferred
 import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.IOException
 import java.net.SocketTimeoutException
@@ -153,7 +150,7 @@ data class CommonRequest(
 
                 override fun onResponse(call: Call, response: Response) {
                     if (response.isSuccessful) {
-                        val result = response.body!!.string()
+                        val result = response.body()!!.string()
                         try {
 
                             val resultCallback =
@@ -172,7 +169,7 @@ data class CommonRequest(
                         }
                     } else {
                         commonCallback {
-                            callback.onError(Exception("request to ${getUrl()} is fail; http code: ${response.code}!"))
+                            callback.onError(Exception("request to ${getUrl()} is fail; http code: ${response.code()}!"))
                         }
                     }
                 }
@@ -199,12 +196,12 @@ data class CommonRequest(
         }
         try {
             val response = call.execute()
-            if (response.isSuccessful && response.body != null) {
+            if (response.isSuccessful && response.body() != null) {
                 when {
-                    T::class.java == String::class.java -> deferred.complete(response.body!!.string() as T)
+                    T::class.java == String::class.java -> deferred.complete(response.body()!!.string() as T)
                     else ->
                         deferred.complete(
-                                SmartHttp.convert(response.body!!.string())
+                                SmartHttp.convert(response.body()!!.string())
                         )
                 }
             } else {
@@ -225,7 +222,7 @@ data class CommonRequest(
         val parser = object : Parser<T> {
             override fun onParse(response: Response): T {
                 //return SmartHttp.convert(response.body()!!.string())
-                return response.body!!.string().toJavaBean<T>()
+                return response.body()!!.string().toJavaBean<T>()
             }
         }
         return ObservableHttp(
@@ -325,14 +322,17 @@ data class CommonRequest(
                         builder.addFormDataPart(
                                 it.first,
                                 file.name,
-                                file.asRequestBody(file.mediaType().toMediaTypeOrNull())
+                                RequestBody.create(MediaType.parse(file.mediaType()), file)
                         )
                     }
                 }
                 builder.setType(MultipartBody.FORM).build()
             }
             usingJson -> {
-                getJsonString().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+                RequestBody.create(
+                        MediaType.parse("application/json; charset=utf-8"),
+                        getJsonString()
+                )
             }
             else -> {
                 // form-data url-encoded

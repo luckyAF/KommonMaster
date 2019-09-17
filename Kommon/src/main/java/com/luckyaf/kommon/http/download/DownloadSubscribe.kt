@@ -81,12 +81,12 @@ class DownloadSubscribe(private val downloadRequest: DownloadRequest) : Observab
             val response = downloadRequest.call().execute()
 
             if (downloadRequest.currentSize > 0) {
-                if (response.code != 206) {
+                if (response.code() != 206) {
                     downloadRequest.status = StatusConstant.ERROR
                     throw Exception("远端资源已更改，请重新下载")
                 }
             }
-            val body = response.body
+            val body = response.body()
             val responseBody =
                 DownloadResponseBody.upgrade(body!!, speedLimit, object : ReadCallback {
                     override fun call(size: Int) {

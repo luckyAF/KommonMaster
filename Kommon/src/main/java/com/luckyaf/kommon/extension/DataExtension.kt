@@ -1,8 +1,5 @@
 package com.luckyaf.kommon.extension
 
-import android.os.Bundle
-import android.os.Parcelable
-import java.io.Serializable
 
 /**
  * 类描述：
@@ -27,5 +24,29 @@ fun <T:Any> Collection<T>.addAllTo(collection: MutableCollection<T>?){
 fun <T:Any> T?.isMemberOf(collection: MutableCollection<T>?) : Boolean{
     collection?:return false
     return collection.contains(this)
+}
+
+fun <T:Any> List<T>.safeSubList(fromIndex: Int, toIndex: Int):List<T>{
+    if (fromIndex > size) {
+        return emptyList()
+    }
+    if (toIndex < 0) {
+        return emptyList()
+    }
+    val start = if (fromIndex < 0) {
+        0
+    } else {
+        fromIndex
+    }
+    val end = if (toIndex > size) {
+        size
+    } else {
+        toIndex
+    }
+    return if (start > end) {
+        this.subList(end, start).reversed()
+    } else {
+        this.subList(start, end)
+    }
 
 }

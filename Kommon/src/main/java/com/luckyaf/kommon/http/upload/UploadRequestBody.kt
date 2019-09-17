@@ -66,7 +66,7 @@ class UploadRequestBody(
         try {
             countingSink = CountingSink(sink)
             //  SuperInputStream  inputStream = new SuperInputStream(responseBody.source().inputStream(),limitSpeed,readListener);
-            val bufferedSink = countingSink.buffer()
+            val bufferedSink = Okio.buffer(countingSink)
             requestBody.writeTo(bufferedSink)
             bufferedSink.flush()
         } catch (e: IOException) {
