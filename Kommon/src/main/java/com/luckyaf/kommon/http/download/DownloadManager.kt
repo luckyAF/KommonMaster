@@ -1,6 +1,6 @@
 package com.luckyaf.kommon.http.download
 
-import android.util.ArrayMap
+import android.support.v4.util.ArrayMap
 import com.luckyaf.kommon.http.request.DownloadRequest
 
 /**

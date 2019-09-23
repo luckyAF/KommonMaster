@@ -1,5 +1,6 @@
 package com.luckyaf.kommon.extension
 
+import com.luckyaf.kommon.Kommon
 import com.luckyaf.kommon.utils.GsonUtil
 import com.luckyaf.kommon.utils.Logger
 
@@ -14,11 +15,17 @@ fun < T : Any> T?.VERBOSE(tag: String = this.toString()) {
         Logger.v("value is null", tag)
         return
     }
+    if(!Kommon.DEBUG){
+        return
+    }
     Logger.v(GsonUtil.provideGson().toJson(this), tag)
 }
 fun < T : Any> T?.INFO(tag: String = this.toString()) {
     if (this == null) {
         Logger.i("value is null", tag)
+        return
+    }
+    if(!Kommon.DEBUG){
         return
     }
     Logger.i(GsonUtil.provideGson().toJson(this), tag)
@@ -28,6 +35,9 @@ fun < T : Any> T?.WARN(tag: String = this.toString()) {
         Logger.w("value is null", tag)
         return
     }
+    if(!Kommon.DEBUG){
+        return
+    }
     Logger.w(GsonUtil.provideGson().toJson(this), tag)
 }
 fun < T : Any> T?.DEBUG(tag: String = this.toString()) {
@@ -35,11 +45,17 @@ fun < T : Any> T?.DEBUG(tag: String = this.toString()) {
         Logger.d("value is null", tag)
         return
     }
+    if(!Kommon.DEBUG){
+        return
+    }
     Logger.d(GsonUtil.provideGson().toJson(this), tag)
 }
 fun < T : Any> T?.ERROR(tag: String = this.toString()) {
     if (this == null) {
         Logger.e("value is null", tag)
+        return
+    }
+    if(!Kommon.DEBUG){
         return
     }
     Logger.e(GsonUtil.provideGson().toJson(this), tag)

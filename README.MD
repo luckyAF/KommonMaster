@@ -5,7 +5,7 @@
 ## 建议自行选取部分代码 拷贝至项目
 
 ## 引入库 
-> implementation 'com.luckyaf:kommon:0.3.7'   
+> implementation 'com.luckyaf:kommon:0.3.9'   
 
 ## TODO
 - [x]AOP注解框架引入 (改为独立项目GoodAt)

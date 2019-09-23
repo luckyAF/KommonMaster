@@ -1,6 +1,6 @@
 package com.luckyaf.kommon.http
 
-import android.util.ArrayMap
+import android.support.v4.util.ArrayMap
 import com.google.gson.reflect.TypeToken
 import com.luckyaf.kommon.http.interceptor.HttpLogInterceptor
 import com.luckyaf.kommon.http.request.CommonRequest
@@ -22,7 +22,7 @@ object SmartHttp {
     var globalHeaders = ArrayMap<String, String>()// 通用 header
     var mGson = GsonUtil.provideGson()
     var mOkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(HttpLogInterceptor())
+            .addNetworkInterceptor(HttpLogInterceptor())
             .readTimeout(httpTimeout, TimeUnit.MILLISECONDS)
             .writeTimeout(httpTimeout, TimeUnit.MILLISECONDS)
             .connectTimeout(httpTimeout, TimeUnit.MILLISECONDS)
