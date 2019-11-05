@@ -1,7 +1,8 @@
 package com.luckyaf.kommon.http.interceptor
 
-import com.luckyaf.kommon.BuildConfig
+
 import com.luckyaf.kommon.Kommon
+import com.luckyaf.kommon.extension.DEBUG
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -16,12 +17,14 @@ import java.io.IOException
 import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
 
+
 /**
  * 类描述：
- * @author Created by luckyAF on 2019-08-03
+ * @author Created by luckyAF on 2019-11-04
  *
  */
-class HttpLogInterceptor @JvmOverloads constructor(
+
+class OkLogInterceptor @JvmOverloads constructor(
         private val printResponseHeader: Boolean = false,
         private val logger: Logger = Logger.providerLogger()) : Interceptor {
     private val requestPrefix = "--->"
@@ -59,15 +62,16 @@ class HttpLogInterceptor @JvmOverloads constructor(
         val requestBody = request.body()
         val connection = chain.connection()
         // 1. 请求第一行
-        var requestMessage = "$requestPrefix ${request.method()} ${request.url()} ${connection?.protocol()
-                ?: ""}\n"
+        var requestMessage = StringBuilder()
+        requestMessage.append("$requestPrefix ${request.method()} ${request.url()} ${connection?.protocol()
+                ?: ""}\n")
         // 2. 请求头，只拼自定义的头
-        requestMessage += header2String(request.headers())
+        requestMessage.append(header2String(request.headers()))
 
 
         // 3. 请求体
         if (bodyHasUnknownEncoding(request.headers())) {
-            requestMessage += "\n$requestPrefix END ${request.method()} (encoded body omitted)"
+            requestMessage.append("\n$requestPrefix END ${request.method()} (encoded body omitted)")
         } else if (requestBody != null) {
             val buffer = Buffer()
             requestBody.writeTo(buffer)
@@ -77,18 +81,18 @@ class HttpLogInterceptor @JvmOverloads constructor(
             if (contentType != null) {
                 charset = contentType.charset(UTF8)
             }
-            requestMessage += "\n"
+            requestMessage.append("\n")
             if (isPlaintext(buffer)) {
-                requestMessage += buffer.readString(charset!!)
-                requestMessage += "\n$requestPrefix END ${request.method()}"
+                requestMessage.append(buffer.readString(charset!!))
+                requestMessage.append("\n$requestPrefix END ${request.method()}")
             } else {
-                requestMessage += "\n$requestPrefix END ${request.method()} (binary ${requestBody.contentLength()} -byte body omitted)"
+                requestMessage.append("\n$requestPrefix END ${request.method()} (binary ${requestBody.contentLength()} -byte body omitted)")
             }
         } else {
-            requestMessage += "\n$requestPrefix END ${request.method()} (no request body)"
+            requestMessage.append("\n$requestPrefix END ${request.method()} (no request body)")
         }
         // 4. 打印请求信息
-        logger.log(requestMessage)
+        logger.log(requestMessage.toString())
 
         val startNs = System.nanoTime()
         val response: Response
@@ -99,30 +103,31 @@ class HttpLogInterceptor @JvmOverloads constructor(
             throw e
         }
 
+
         try {
             val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
             val responseBody = response.body()
             val contentLength = responseBody!!.contentLength()
             val bodySize = if (contentLength != -1L) contentLength.toString() + "-byte" else "unknown-length"
-            var responseMessage = "$responsePrefix ${response.code()} ${if (response.message().isEmpty()) "" else response.message()} "
-            responseMessage += response.request().url()
-            responseMessage += " (" + tookMs + "ms" + ", $bodySize body)\n"
+            val responseMessage = StringBuilder()
+            responseMessage.append("$responsePrefix ${response.code()} ${if (response.message().isEmpty()) "" else response.message()} ")
+            responseMessage.append(response.request().url())
+            responseMessage.append(" (" + tookMs + "ms" + ", $bodySize body)\n")
 
             // 是否拼接打印头
             val headers = response.headers()
             if (printResponseHeader) {
-                responseMessage += header2String(headers)
+                responseMessage.append(header2String(headers))
             }
 
             if (!HttpHeaders.hasBody(response)) {
-                responseMessage += "\n$responsePrefix END HTTP"
+                responseMessage.append("\n$responsePrefix END HTTP")
             } else if (bodyHasUnknownEncoding(response.headers())) {
-                responseMessage += "\n$responsePrefix END HTTP (encoded body omitted)"
+                responseMessage.append("\n$responsePrefix END HTTP (encoded body omitted)")
             } else {
                 val source = responseBody.source()
                 source.request(java.lang.Long.MAX_VALUE) // Buffer the entire body.
                 var buffer = source.buffer()
-
                 var gzippedLength: Long? = null
                 if ("gzip".equals(headers.get("Content-Encoding"), ignoreCase = true)) {
                     gzippedLength = buffer.size()
@@ -131,38 +136,35 @@ class HttpLogInterceptor @JvmOverloads constructor(
                         buffer.writeAll(gzippedResponseBody)
                     }
                 }
-
                 var charset: Charset? = UTF8
                 val contentType = responseBody.contentType()
                 if (contentType != null) {
                     charset = contentType.charset(UTF8)
                 }
-
-                responseMessage += "\n"
+                responseMessage.append("\n")
                 if (!isPlaintext(buffer)) {
-                    responseMessage += "\n$responsePrefix END HTTP (binary " + buffer.size() + "-byte body omitted)"
+                    responseMessage.append("\n$responsePrefix END HTTP (binary " + buffer.size() + "-byte body omitted)")
                     return response
                 }
-
                 if (contentLength != 0L) {
+                    contentLength.DEBUG("contentLength")
                     val responseData = buffer.clone().readString(charset!!)
-                    responseMessage += try {
+                    responseMessage.append(try {
                         JSONObject(responseData).toString(2)
                     } catch (e: JSONException) {
                         // 不是json
                         responseData
-                    }
+                    })
                 }
-
-                responseMessage += if (gzippedLength != null) {
+                responseMessage.append(if (gzippedLength != null) {
                     "\n$responsePrefix END HTTP (" + buffer.size() + "-byte, $gzippedLength-gzipped-byte body)"
                 } else {
                     "\n$responsePrefix END HTTP (" + buffer.size() + "-byte body)"
-                }
+                })
             }
-            logger.log(responseMessage)
-        } catch (e: Exception) {
-
+            logger.log(responseMessage.toString())
+        } catch (t: Throwable) {
+            t.printStackTrace()
         }
         return response
     }

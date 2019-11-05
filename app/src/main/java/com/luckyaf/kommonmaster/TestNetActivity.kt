@@ -105,7 +105,8 @@ class TestNetActivity : SmartActivity() {
                     success {
                         it?.date.DEBUG()
                         it?.let {
-                            showData(it)
+                            //showData(it)
+                            updateZhihuData(it)
                         }
                         showMessage("成功")
                     }
@@ -114,6 +115,11 @@ class TestNetActivity : SmartActivity() {
                     }
                 }
 
+    }
+
+    private fun updateZhihuData(data:ZhihuDaily){
+        tvResponse.text = data.date
+        recycler.visibility = View.VISIBLE
     }
 
     private fun testRxGet(){

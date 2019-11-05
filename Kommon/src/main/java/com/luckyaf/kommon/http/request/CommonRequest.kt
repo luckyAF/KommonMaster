@@ -200,9 +200,7 @@ data class CommonRequest(
                 when {
                     T::class.java == String::class.java -> deferred.complete(response.body()!!.string() as T)
                     else ->
-                        deferred.complete(
-                                SmartHttp.convert(response.body()!!.string())
-                        )
+                        deferred.complete(SmartHttp.convert(response.body()!!.string()))
                 }
             } else {
                 deferred.completeExceptionally(Exception("数据异常"))
@@ -310,20 +308,20 @@ data class CommonRequest(
 
     private fun buildRequestBody(): RequestBody {
         return when {
-
             isMultiPart() -> {
                 // multipart/form-data
                 val builder = MultipartBody.Builder()
                 mParams.forEach {
-                    if (it.second is String) {
-                        builder.addFormDataPart(it.first, it.second as String)
-                    } else if (it.second is File) {
+                     if (it.second is File) {
                         val file = it.second as File
                         builder.addFormDataPart(
                                 it.first,
                                 file.name,
                                 RequestBody.create(MediaType.parse(file.mediaType()), file)
                         )
+                    }else {
+                        builder.addFormDataPart(it.first, it.second.toString())
+
                     }
                 }
                 builder.setType(MultipartBody.FORM).build()
@@ -357,6 +355,8 @@ data class CommonRequest(
     private fun isMultiPart() = mParams.any { it.second is File }
 
     fun commonCallback(f: () -> Unit) {
+        // todo fix
+        Thread.sleep(2000)
         if (backOnOldThread) {
             f.invoke()
         } else {

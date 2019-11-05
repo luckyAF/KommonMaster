@@ -3,9 +3,9 @@ package com.luckyaf.kommon.http
 import android.support.v4.util.ArrayMap
 import com.google.gson.reflect.TypeToken
 import com.luckyaf.kommon.http.interceptor.HttpLogInterceptor
+import com.luckyaf.kommon.http.interceptor.OkLogInterceptor
 import com.luckyaf.kommon.http.request.CommonRequest
 import com.luckyaf.kommon.http.request.DownloadRequest
-import com.luckyaf.kommon.http.request.UploadRequest
 import com.luckyaf.kommon.utils.GsonUtil
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -22,7 +22,7 @@ object SmartHttp {
     var globalHeaders = ArrayMap<String, String>()// 通用 header
     var mGson = GsonUtil.provideGson()
     var mOkHttpClient = OkHttpClient.Builder()
-            .addNetworkInterceptor(HttpLogInterceptor())
+            .addNetworkInterceptor(OkLogInterceptor())
             .readTimeout(httpTimeout, TimeUnit.MILLISECONDS)
             .writeTimeout(httpTimeout, TimeUnit.MILLISECONDS)
             .connectTimeout(httpTimeout, TimeUnit.MILLISECONDS)
@@ -30,7 +30,7 @@ object SmartHttp {
 
     fun provideNewDownloadClient(): OkHttpClient {
         return OkHttpClient.Builder()
-                .addInterceptor(HttpLogInterceptor())
+                .addInterceptor(OkLogInterceptor())
                 .readTimeout(httpTimeout, TimeUnit.MILLISECONDS)
                 .writeTimeout(httpTimeout, TimeUnit.MILLISECONDS)
                 .connectTimeout(httpTimeout, TimeUnit.MILLISECONDS)
@@ -110,7 +110,7 @@ object SmartHttp {
 
     fun download(url: String) = DownloadRequest(url = url)
 
-    fun upload() = UploadRequest()
+    //fun upload() = UploadRequest()
 
 
      inline fun <reified T> convert(jsonString: String): T {

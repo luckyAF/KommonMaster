@@ -22,28 +22,28 @@ import java.util.*
  *
  */
 data class DownloadRequest(
-    @HttpMethod
-    var method: String = HttpMethod.GET,
-    var tag: String? = null,
-    var url: String = "",
-    private var mHeaders: LinkedList<Pair<String, String>> = LinkedList(),
-    private var mParams: LinkedList<Pair<String, Any>> = LinkedList()
+        @HttpMethod
+        var method: String = HttpMethod.GET,
+        var tag: String? = null,
+        var url: String = "",
+        private var mHeaders: LinkedList<Pair<String, String>> = LinkedList(),
+        private var mParams: LinkedList<Pair<String, Any>> = LinkedList()
 ) {
 
-     var fileDir: String = ""
-     var fileName: String = ""
-     var currentSize: Long = 0
-     var totalSize: Long = 0
-     var supportRange: Boolean = false
-     var lastModify: String = ""
-     var status: Int = 0
-    var mDownloadCallback:DownloadCallback?=null
+    var fileDir: String = ""
+    var fileName: String = ""
+    var currentSize: Long = 0
+    var totalSize: Long = 0
+    var supportRange: Boolean = false
+    var lastModify: String = ""
+    var status: Int = 0
+    var mDownloadCallback: DownloadCallback? = null
 
     init {
         currentSize = 0
         supportRange = true
         val externalFile = Kommon.context.getExternalFilesDir(null)
-        fileDir = externalFile?.absolutePath?:""  + File.separator + "download"
+        fileDir = externalFile?.absolutePath ?: "" + File.separator + "download"
         status = StatusConstant.NONE
     }
 
@@ -51,12 +51,14 @@ data class DownloadRequest(
         this.tag = tag
         return this
     }
+
     fun updateTag(): DownloadRequest {
         if (TextUtils.isEmpty(tag)) {
             this.tag = "download" + System.currentTimeMillis()
         }
         return this
     }
+
     fun headers(vararg headers: Pair<String, Any>): DownloadRequest {
         headers.forEach { this.mHeaders.add(Pair(it.first, "${it.second}")) }
         return this
@@ -100,10 +102,12 @@ data class DownloadRequest(
         this.fileDir = fileDir
         return this
     }
+
     fun setCurrentSize(currentSize: Long): DownloadRequest {
         this.currentSize = currentSize
         return this
     }
+
     fun setTotalSize(totalSize: Long): DownloadRequest {
         this.totalSize = totalSize
         return this
@@ -118,30 +122,30 @@ data class DownloadRequest(
         return status == StatusConstant.NONE || status == StatusConstant.WAITING
     }
 
-    fun callback(callback:DownloadCallback):DownloadRequest{
+    fun callback(callback: DownloadCallback): DownloadRequest {
         mDownloadCallback = callback
         return this
     }
 
 
-    fun call():Call{
+    fun call(): Call {
         val request = Request.Builder().url(url)
-            .apply {
-                SmartHttp.globalHeaders.forEach {
-                    addHeader(it.key, it.value)
+                .apply {
+                    SmartHttp.globalHeaders.forEach {
+                        addHeader(it.key, it.value)
+                    }
+                    mHeaders.forEach {
+                        addHeader(it.first, it.second)
+                    }
                 }
-                mHeaders.forEach {
-                    addHeader(it.first, it.second)
-                }
-            }
-            .get()
-            .tag(tag!!)
-            .build()
+                .get()
+                .tag(tag!!)
+                .build()
 
         return SmartHttp.provideNewDownloadClient().newCall(request)
     }
 
-    fun start(){
+    fun start() {
         val task = DownloadManager.getDownloadTask(this)
         mDownloadCallback?.let {
             task.addCallback(it)
@@ -149,13 +153,12 @@ data class DownloadRequest(
         task.start()
     }
 
-    fun prepare():Observable<DownloadRequest>{
+    fun prepare(): Observable<DownloadRequest> {
         return Observable.create(RequestInitSubscribe(this))
-            .subscribeOn(Schedulers.io())
-            .unsubscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
-
 
 
 }
