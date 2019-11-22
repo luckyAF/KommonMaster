@@ -41,11 +41,7 @@ inline fun <reified T : Activity> Fragment.jumpForResult(
         crossinline action: (Int, Intent?) -> Unit) {
     val intent = Intent(this.context, T::class.java)
     params?.let { intent.putExtras(it) }
-    smartJump.startForResult(intent, object : SmartJump.ActivityResultCallback {
-        override fun onActivityResult(resultCode: Int, data: Intent?) {
-            action(resultCode, data)
-        }
-    })
+    jumpForResult(intent,action)
 }
 
 
@@ -55,6 +51,25 @@ inline fun <reified T : Activity> FragmentActivity.jumpForResult(
 ) {
     val intent = Intent(this, T::class.java)
     params?.let { intent.putExtras(it) }
+    jumpForResult(intent,action)
+}
+
+
+inline fun  Fragment.jumpForResult(
+        intent: Intent,
+        crossinline action: (Int, Intent?) -> Unit
+) {
+    smartJump.startForResult(intent, object : SmartJump.ActivityResultCallback {
+        override fun onActivityResult(resultCode: Int, data: Intent?) {
+            action(resultCode, data)
+        }
+    })
+}
+
+inline fun  FragmentActivity.jumpForResult(
+        intent: Intent,
+        crossinline action: (Int, Intent?) -> Unit
+) {
     smartJump.startForResult(intent, object : SmartJump.ActivityResultCallback {
         override fun onActivityResult(resultCode: Int, data: Intent?) {
             action(resultCode, data)

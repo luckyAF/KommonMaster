@@ -17,7 +17,7 @@ import android.widget.TextView
  *
  */
 
-fun EditText.addEnterListener(block:()->Unit){
+fun EditText.addEnterListener(block:()-> Unit){
     this.setOnEditorActionListener { _, actionId, event ->
         if (actionId == EditorInfo.IME_ACTION_SEND
                 || actionId == EditorInfo.IME_ACTION_DONE
@@ -28,6 +28,7 @@ fun EditText.addEnterListener(block:()->Unit){
         false
     }
 }
+
 
 
 fun LifecycleOwner.watchText(textView: TextView,rtn:(String)-> Unit){
@@ -43,6 +44,12 @@ fun LifecycleOwner.watchText(textView: TextView,rtn:(String)-> Unit){
     textView.addTextChangedListener(textWatcher)
     lifecycle.addObserver(TextWatcherLifecycleListener(textView,textWatcher, lifecycle))
 }
+
+fun LifecycleOwner.watchText(textView: TextView,textWatcher:TextWatcher){
+    textView.addTextChangedListener(textWatcher)
+    lifecycle.addObserver(TextWatcherLifecycleListener(textView,textWatcher, lifecycle))
+}
+
 
 internal class TextWatcherLifecycleListener(private val textView:TextView,private val listener:TextWatcher, private val lifecycle: Lifecycle):
         LifecycleObserver {
