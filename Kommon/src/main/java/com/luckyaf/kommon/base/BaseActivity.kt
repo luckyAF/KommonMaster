@@ -2,8 +2,8 @@ package com.luckyaf.kommon.base
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.LayoutRes
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import io.reactivex.disposables.CompositeDisposable
@@ -14,7 +14,7 @@ import android.content.Context
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.support.annotation.RequiresPermission
+import androidx.annotation.RequiresPermission
 import com.luckyaf.kommon.R
 import com.luckyaf.kommon.utils.KeyboardUtil
 

@@ -6,12 +6,12 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
-import android.support.annotation.ColorInt
-import android.support.annotation.FloatRange
-import android.support.annotation.IntRange
-import android.support.annotation.RequiresApi
-import android.support.design.widget.CoordinatorLayout
-import android.support.v4.widget.DrawerLayout
+import androidx.annotation.ColorInt
+import androidx.annotation.FloatRange
+import androidx.annotation.IntRange
+import androidx.annotation.RequiresApi
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.drawerlayout.widget.DrawerLayout
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -98,7 +98,7 @@ object StatusBarUtil {
             val contentView = activity.findViewById<View>(android.R.id.content) as ViewGroup
             val rootView = contentView.getChildAt(0)
             val statusBarHeight = getStatusBarHeight(activity)
-            if (rootView != null && rootView is CoordinatorLayout) {
+            if (rootView != null && rootView is androidx.coordinatorlayout.widget.CoordinatorLayout) {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     rootView.fitsSystemWindows = false
                     contentView.setBackgroundColor(calculateStatusColor(color, statusBarAlpha))
@@ -237,7 +237,7 @@ object StatusBarUtil {
      * @param drawerLayout DrawerLayout
      * @param color        状态栏颜色值
      */
-    fun setColorForDrawerLayout(activity: Activity, drawerLayout: DrawerLayout, @ColorInt color: Int) {
+    fun setColorForDrawerLayout(activity: Activity, drawerLayout: androidx.drawerlayout.widget.DrawerLayout, @ColorInt color: Int) {
         setColorForDrawerLayout(activity, drawerLayout, color, DEFAULT_STATUS_BAR_ALPHA)
     }
 
@@ -248,7 +248,7 @@ object StatusBarUtil {
      * @param drawerLayout DrawerLayout
      * @param color        状态栏颜色值
      */
-    fun setColorNoTranslucentForDrawerLayout(activity: Activity, drawerLayout: DrawerLayout, @ColorInt color: Int) {
+    fun setColorNoTranslucentForDrawerLayout(activity: Activity, drawerLayout: androidx.drawerlayout.widget.DrawerLayout, @ColorInt color: Int) {
         setColorForDrawerLayout(activity, drawerLayout, color, 0)
     }
 
@@ -260,7 +260,7 @@ object StatusBarUtil {
      * @param color          状态栏颜色值
      * @param statusBarAlpha 状态栏透明度 @IntRange(from = 0, to = 255)
      */
-    fun setColorForDrawerLayout(activity: Activity, drawerLayout: DrawerLayout, @ColorInt color: Int,
+    fun setColorForDrawerLayout(activity: Activity, drawerLayout: androidx.drawerlayout.widget.DrawerLayout, @ColorInt color: Int,
                                 statusBarAlpha: Int) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             return
@@ -301,7 +301,7 @@ object StatusBarUtil {
      * @param drawerLayout              DrawerLayout
      * @param drawerLayoutContentLayout DrawerLayout 的内容布局
      */
-    private fun setDrawerLayoutProperty(drawerLayout: DrawerLayout, drawerLayoutContentLayout: ViewGroup) {
+    private fun setDrawerLayoutProperty(drawerLayout: androidx.drawerlayout.widget.DrawerLayout, drawerLayoutContentLayout: ViewGroup) {
         val drawer = drawerLayout.getChildAt(1) as ViewGroup
         drawerLayout.fitsSystemWindows = false
         drawerLayoutContentLayout.fitsSystemWindows = false
@@ -317,7 +317,7 @@ object StatusBarUtil {
      * @param color        状态栏颜色值
      */
     @Deprecated("")
-    fun setColorForDrawerLayoutDiff(activity: Activity, drawerLayout: DrawerLayout, @ColorInt color: Int) {
+    fun setColorForDrawerLayoutDiff(activity: Activity, drawerLayout: androidx.drawerlayout.widget.DrawerLayout, @ColorInt color: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             activity.window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             // 生成一个状态栏大小的矩形
@@ -347,7 +347,7 @@ object StatusBarUtil {
      * @param activity     需要设置的activity
      * @param drawerLayout DrawerLayout
      */
-    fun setTranslucentForDrawerLayout(activity: Activity, drawerLayout: DrawerLayout) {
+    fun setTranslucentForDrawerLayout(activity: Activity, drawerLayout: androidx.drawerlayout.widget.DrawerLayout) {
         setTranslucentForDrawerLayout(activity, drawerLayout, DEFAULT_STATUS_BAR_ALPHA)
     }
 
@@ -357,7 +357,7 @@ object StatusBarUtil {
      * @param activity     需要设置的activity
      * @param drawerLayout DrawerLayout
      */
-    fun setTranslucentForDrawerLayout(activity: Activity, drawerLayout: DrawerLayout, statusBarAlpha: Int) {
+    fun setTranslucentForDrawerLayout(activity: Activity, drawerLayout: androidx.drawerlayout.widget.DrawerLayout, statusBarAlpha: Int) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             return
         }
@@ -371,7 +371,7 @@ object StatusBarUtil {
      * @param activity     需要设置的activity
      * @param drawerLayout DrawerLayout
      */
-    fun setTransparentForDrawerLayout(activity: Activity, drawerLayout: DrawerLayout) {
+    fun setTransparentForDrawerLayout(activity: Activity, drawerLayout: androidx.drawerlayout.widget.DrawerLayout) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             return
         }
@@ -400,7 +400,7 @@ object StatusBarUtil {
      * @param drawerLayout DrawerLayout
      */
     @Deprecated("")
-    fun setTranslucentForDrawerLayoutDiff(activity: Activity, drawerLayout: DrawerLayout) {
+    fun setTranslucentForDrawerLayoutDiff(activity: Activity, drawerLayout: androidx.drawerlayout.widget.DrawerLayout) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 设置状态栏透明
             activity.window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)

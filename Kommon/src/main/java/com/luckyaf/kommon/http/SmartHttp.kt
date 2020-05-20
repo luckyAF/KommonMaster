@@ -1,6 +1,6 @@
 package com.luckyaf.kommon.http
 
-import android.support.v4.util.ArrayMap
+import androidx.collection.ArrayMap
 import com.google.gson.reflect.TypeToken
 import com.luckyaf.kommon.http.interceptor.HttpLogInterceptor
 import com.luckyaf.kommon.http.interceptor.OkLogInterceptor
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
 object SmartHttp {
 
     var httpTimeout = 10000L  //超时时间 10s
-    var globalHeaders = ArrayMap<String, String>()// 通用 header
+    var globalHeaders = androidx.collection.ArrayMap<String, String>()// 通用 header
     var mGson = GsonUtil.provideGson()
     var mOkHttpClient = OkHttpClient.Builder()
             .addNetworkInterceptor(OkLogInterceptor())

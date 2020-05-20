@@ -3,8 +3,8 @@ package com.luckyaf.kommon.base
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.support.annotation.LayoutRes
-import android.support.v4.app.Fragment
+import androidx.annotation.LayoutRes
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +17,7 @@ import org.greenrobot.eventbus.EventBus
  *
  * @author Created by luckyAF on 2019-07-16
  */
-abstract class BaseFragment: Fragment(),BaseView{
+abstract class BaseFragment: androidx.fragment.app.Fragment(),BaseView{
     protected val LOG_TAG by lazy { this.javaClass.name }
     protected lateinit var mContext  :Context
     protected lateinit var mActivity:Activity

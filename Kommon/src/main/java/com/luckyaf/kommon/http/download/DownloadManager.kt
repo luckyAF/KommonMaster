@@ -1,6 +1,6 @@
 package com.luckyaf.kommon.http.download
 
-import android.support.v4.util.ArrayMap
+import androidx.collection.ArrayMap
 import com.luckyaf.kommon.http.request.DownloadRequest
 
 /**
@@ -9,7 +9,7 @@ import com.luckyaf.kommon.http.request.DownloadRequest
  *
  */
 object DownloadManager {
-    private val downloadTasks = ArrayMap<Any, DownloadTask>()//用来存放请求
+    private val downloadTasks = androidx.collection.ArrayMap<Any, DownloadTask>()//用来存放请求
     private var requestUpdater:((DownloadRequest) -> Unit ) ?= null
 
     fun setUpdater(updater: (DownloadRequest) -> Unit ){

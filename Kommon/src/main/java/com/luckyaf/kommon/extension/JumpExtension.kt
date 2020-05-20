@@ -5,8 +5,8 @@ package com.luckyaf.kommon.extension
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.luckyaf.kommon.component.SmartJump
 
 
@@ -17,10 +17,10 @@ import com.luckyaf.kommon.component.SmartJump
  */
 
 
-inline val FragmentActivity.smartJump
+inline val androidx.fragment.app.FragmentActivity.smartJump
     get() = SmartJump.from(this)
 
-inline val Fragment.smartJump
+inline val androidx.fragment.app.Fragment.smartJump
     get() = SmartJump.from(this)
 
 
@@ -30,13 +30,13 @@ inline fun <reified T : Activity> Activity.jumpTo(params: Bundle? = null) {
     startActivity(intent)
 }
 
-inline fun <reified T : Activity> Fragment.jumpTo(params: Bundle? = null) {
+inline fun <reified T : Activity> androidx.fragment.app.Fragment.jumpTo(params: Bundle? = null) {
     val intent = Intent(this.activity, T::class.java)
     params?.let { intent.putExtras(it) }
     startActivity(intent)
 }
 
-inline fun <reified T : Activity> Fragment.jumpForResult(
+inline fun <reified T : Activity> androidx.fragment.app.Fragment.jumpForResult(
         params: Bundle? = null,
         crossinline action: (Int, Intent?) -> Unit) {
     val intent = Intent(this.context, T::class.java)
@@ -45,7 +45,7 @@ inline fun <reified T : Activity> Fragment.jumpForResult(
 }
 
 
-inline fun <reified T : Activity> FragmentActivity.jumpForResult(
+inline fun <reified T : Activity> androidx.fragment.app.FragmentActivity.jumpForResult(
         params: Bundle? = null,
         crossinline action: (Int, Intent?) -> Unit
 ) {
@@ -55,7 +55,7 @@ inline fun <reified T : Activity> FragmentActivity.jumpForResult(
 }
 
 
-inline fun  Fragment.jumpForResult(
+inline fun androidx.fragment.app.Fragment.jumpForResult(
         intent: Intent,
         crossinline action: (Int, Intent?) -> Unit
 ) {
@@ -66,7 +66,7 @@ inline fun  Fragment.jumpForResult(
     })
 }
 
-inline fun  FragmentActivity.jumpForResult(
+inline fun androidx.fragment.app.FragmentActivity.jumpForResult(
         intent: Intent,
         crossinline action: (Int, Intent?) -> Unit
 ) {

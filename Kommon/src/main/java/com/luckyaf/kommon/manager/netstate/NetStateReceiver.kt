@@ -3,7 +3,7 @@ package com.luckyaf.kommon.manager.netstate
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.support.annotation.RequiresPermission
+import androidx.annotation.RequiresPermission
 import com.luckyaf.kommon.utils.NetworkUtils
 
 

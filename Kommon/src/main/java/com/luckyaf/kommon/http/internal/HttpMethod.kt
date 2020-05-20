@@ -1,6 +1,6 @@
 package com.luckyaf.kommon.http.internal
 
-import android.support.annotation.StringDef
+import androidx.annotation.StringDef
 
 /**
  * 类描述：

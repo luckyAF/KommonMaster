@@ -1,8 +1,8 @@
 package com.luckyaf.kommon.mvi
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import android.os.Bundle
 import com.luckyaf.kommon.component.SingleLiveEvent
 

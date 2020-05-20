@@ -1,11 +1,11 @@
 package com.luckyaf.kommon.component
 
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import java.util.concurrent.atomic.AtomicBoolean
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.Observer
-import android.support.annotation.MainThread
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.annotation.MainThread
 import android.util.Log
 /**
  * 类描述：
@@ -22,8 +22,10 @@ class SingleLiveEvent<T> :MutableLiveData<T>(){
         mPending.set(true)
         super.setValue(t)
     }
+
+
     @MainThread
-    override fun observe(owner: LifecycleOwner, observer: Observer<T>) {
+    override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
         if (hasActiveObservers()) {
             Log.w(tag, "Multiple observers registered but only one will be notified of changes.")
         }

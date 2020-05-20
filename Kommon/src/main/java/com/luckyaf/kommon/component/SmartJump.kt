@@ -2,9 +2,9 @@ package com.luckyaf.kommon.component
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import android.util.SparseArray
 import com.luckyaf.kommon.BuildConfig
 
@@ -17,15 +17,15 @@ import com.luckyaf.kommon.BuildConfig
 class SmartJump {
 
     companion object{
-        fun from(activity: FragmentActivity): SmartJump {
+        fun from(activity: androidx.fragment.app.FragmentActivity): SmartJump {
             return SmartJump(activity.supportFragmentManager)
         }
 
-        fun from(fragment: Fragment): SmartJump {
+        fun from(fragment: androidx.fragment.app.Fragment): SmartJump {
             return SmartJump(fragment.childFragmentManager)
         }
 
-        fun with(fragmentManager: FragmentManager): SmartJump {
+        fun with(fragmentManager: androidx.fragment.app.FragmentManager): SmartJump {
             return SmartJump(fragmentManager)
         }
     }
@@ -43,7 +43,7 @@ class SmartJump {
 
     private  var resultBridgeFragment: ResultBridgeFragment
 
-    constructor(fragmentManager: FragmentManager){
+    constructor(fragmentManager: androidx.fragment.app.FragmentManager){
         resultBridgeFragment = getResultBridgeFragment(fragmentManager)
     }
 
@@ -76,7 +76,7 @@ class SmartJump {
     }
 
 
-    private fun getResultBridgeFragment(fragmentManager: FragmentManager): ResultBridgeFragment {
+    private fun getResultBridgeFragment(fragmentManager: androidx.fragment.app.FragmentManager): ResultBridgeFragment {
         var bridgeFragment = fragmentManager.findFragmentByTag(TAG) as ResultBridgeFragment?
         // 假如fragment 已经添加过了  就不用重复添加了
         if (bridgeFragment == null) {
@@ -94,7 +94,7 @@ class SmartJump {
     }
 
 
-    class ResultBridgeFragment : Fragment() {
+    class ResultBridgeFragment : androidx.fragment.app.Fragment() {
         private val mActivityResultCallbacks = SparseArray<ActivityResultCallback>()
         /**
          * 每次启动都会有个不同的requestCode

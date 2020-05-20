@@ -1,7 +1,7 @@
 package com.luckyaf.kommon.http.interceptor
 
 import android.Manifest
-import android.support.annotation.RequiresPermission
+import androidx.annotation.RequiresPermission
 import android.text.TextUtils
 import com.luckyaf.kommon.Kommon
 import com.luckyaf.kommon.utils.NetworkUtils

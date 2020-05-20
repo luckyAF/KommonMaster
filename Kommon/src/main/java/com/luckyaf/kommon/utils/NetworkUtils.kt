@@ -3,7 +3,7 @@ package com.luckyaf.kommon.utils
 import android.Manifest.permission.ACCESS_NETWORK_STATE
 import android.content.Context
 import android.net.ConnectivityManager
-import android.support.annotation.RequiresPermission
+import androidx.annotation.RequiresPermission
 import android.net.wifi.WifiManager
 import java.net.InetAddress
 import java.net.UnknownHostException

@@ -1,7 +1,7 @@
 package com.luckyaf.kommon.base
 
 import android.app.Activity
-import android.arch.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleOwner
 import com.luckyaf.kommon.constant.MessageType
 
 /**

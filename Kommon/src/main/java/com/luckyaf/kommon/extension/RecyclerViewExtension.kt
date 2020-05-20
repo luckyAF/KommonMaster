@@ -3,7 +3,7 @@ package com.luckyaf.kommon.extension
 
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.support.v7.widget.*
+import androidx.appcompat.widget.*
 
 /**
  * 类描述：
@@ -11,12 +11,12 @@ import android.support.v7.widget.*
  *
  */
 
-inline val RecyclerView.orientation
+inline val androidx.recyclerview.widget.RecyclerView.orientation
     get() = if (layoutManager == null) -1 else layoutManager.run {
         when (this) {
-            is LinearLayoutManager -> orientation
-            is GridLayoutManager -> orientation
-            is StaggeredGridLayoutManager -> orientation
+            is androidx.recyclerview.widget.LinearLayoutManager -> orientation
+            is androidx.recyclerview.widget.GridLayoutManager -> orientation
+            is androidx.recyclerview.widget.StaggeredGridLayoutManager -> orientation
             else -> -1
         }
     }
@@ -28,8 +28,8 @@ inline val RecyclerView.orientation
  * @param isReplace 是否覆盖之前的ItemDecoration，默认是true
  *
  */
-fun RecyclerView.divider(color: Int = Color.parseColor("#DEDEDE"), size: Int = 1, isReplace: Boolean = true): RecyclerView {
-    val decoration = DividerItemDecoration(context, orientation)
+fun androidx.recyclerview.widget.RecyclerView.divider(color: Int = Color.parseColor("#DEDEDE"), size: Int = 1, isReplace: Boolean = true): androidx.recyclerview.widget.RecyclerView {
+    val decoration = androidx.recyclerview.widget.DividerItemDecoration(context, orientation)
     decoration.setDrawable(GradientDrawable().apply {
         setColor(color)
         shape = GradientDrawable.RECTANGLE
@@ -41,24 +41,24 @@ fun RecyclerView.divider(color: Int = Color.parseColor("#DEDEDE"), size: Int = 1
     addItemDecoration(decoration)
     return this
 }
-fun RecyclerView.vertical(spanCount: Int = 0, isStaggered: Boolean = false): RecyclerView {
-    layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+fun androidx.recyclerview.widget.RecyclerView.vertical(spanCount: Int = 0, isStaggered: Boolean = false): androidx.recyclerview.widget.RecyclerView {
+    layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
     if (spanCount != 0) {
-        layoutManager = GridLayoutManager(context, spanCount)
+        layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, spanCount)
     }
     if (isStaggered) {
-        layoutManager = StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL)
+        layoutManager = androidx.recyclerview.widget.StaggeredGridLayoutManager(spanCount, androidx.recyclerview.widget.StaggeredGridLayoutManager.VERTICAL)
     }
     return this
 }
 
-fun RecyclerView.horizontal(spanCount: Int = 0, isStaggered: Boolean = false): RecyclerView {
-    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+fun androidx.recyclerview.widget.RecyclerView.horizontal(spanCount: Int = 0, isStaggered: Boolean = false): androidx.recyclerview.widget.RecyclerView {
+    layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
     if (spanCount != 0) {
-        layoutManager = GridLayoutManager(context, spanCount, GridLayoutManager.HORIZONTAL, false)
+        layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, spanCount, androidx.recyclerview.widget.GridLayoutManager.HORIZONTAL, false)
     }
     if (isStaggered) {
-        layoutManager = StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.HORIZONTAL)
+        layoutManager = androidx.recyclerview.widget.StaggeredGridLayoutManager(spanCount, androidx.recyclerview.widget.StaggeredGridLayoutManager.HORIZONTAL)
     }
     return this
 }

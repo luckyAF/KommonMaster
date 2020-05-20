@@ -1,7 +1,7 @@
 package com.luckyaf.kommon.component
 
 import android.os.Build
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle

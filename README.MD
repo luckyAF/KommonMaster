@@ -5,7 +5,8 @@
 ## 建议自行选取部分代码 拷贝至项目
 
 ## 引入库 
-> implementation 'com.luckyaf:kommon:0.5' 
+> implementation 'com.luckyaf:kommon:0.5'
+
 #### AndroidX
 > implementation 'com.luckyaf:kommon:0.5-x'    
 

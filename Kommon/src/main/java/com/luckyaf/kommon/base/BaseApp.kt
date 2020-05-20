@@ -6,7 +6,7 @@ import android.annotation.TargetApi
 import android.app.Application
 import android.content.Context
 import android.os.Build
-import android.support.multidex.MultiDex
+import androidx.multidex.MultiDex
 
 
 

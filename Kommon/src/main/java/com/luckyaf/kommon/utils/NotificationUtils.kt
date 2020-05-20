@@ -7,8 +7,8 @@ import android.content.Context
 import android.os.Build
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.support.annotation.DrawableRes
-import android.support.v4.app.NotificationCompat
+import androidx.annotation.DrawableRes
+import androidx.core.app.NotificationCompat
 import android.text.TextUtils
 
 
