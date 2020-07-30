@@ -5,9 +5,9 @@
 ## 建议自行选取部分代码 拷贝至项目
 
 ## 引入库 
-> implementation 'com.luckyaf:kommon:0.5' 
+> implementation 'com.luckyaf:kommon:0.7'
 #### AndroidX
-> implementation 'com.luckyaf:kommon:0.5-x'    
+> implementation 'com.luckyaf:kommon:0.6x'
 
 ## TODO
 - [x]AOP注解框架引入 (改为独立项目GoodAt)

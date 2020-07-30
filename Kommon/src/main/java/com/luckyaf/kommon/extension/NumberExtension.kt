@@ -1,5 +1,6 @@
 package com.luckyaf.kommon.extension
 
+import java.math.RoundingMode
 import java.text.DecimalFormat
 import kotlin.math.floor
 
@@ -14,17 +15,27 @@ fun Number.format(format: String): String {
     return String.format(format, this)
 }
 
-val twoDigitFormat = DecimalFormat("0.##")
-val threeDigitFormat = DecimalFormat("0.###")
-val fourDigitFormat = DecimalFormat("0.####")
-val fiveDigitFormat = DecimalFormat("0.#####")
-val sixDigitFormat = DecimalFormat("0.######")
 
-val twoZeroFormat = DecimalFormat("0.00")
-val threeZeroFormat = DecimalFormat("0.000")
-val fourZeroFormat = DecimalFormat("0.0000")
-val fiveZeroFormat = DecimalFormat("0.00000")
-val sixZeroFormat = DecimalFormat("0.000000")
+fun commonDecimalFormat(pattern:String):DecimalFormat{
+    val format = DecimalFormat(pattern)
+    format.roundingMode = RoundingMode.HALF_UP
+    return format
+}
+
+val oneDigitFormat = commonDecimalFormat("0.#")
+val twoDigitFormat = commonDecimalFormat("0.##")
+val threeDigitFormat = commonDecimalFormat("0.###")
+val fourDigitFormat = commonDecimalFormat("0.####")
+val fiveDigitFormat = commonDecimalFormat("0.#####")
+val sixDigitFormat = commonDecimalFormat("0.######")
+
+val oneZeroFormat = commonDecimalFormat("0.0")
+val twoZeroFormat = commonDecimalFormat("0.00")
+val threeZeroFormat = commonDecimalFormat("0.000")
+val fourZeroFormat = commonDecimalFormat("0.0000")
+val fiveZeroFormat = commonDecimalFormat("0.00000")
+val sixZeroFormat = commonDecimalFormat("0.000000")
+
 
 // 精度范围
 private const val eps = 1e-10
