@@ -129,8 +129,6 @@ dependencies {
     api "com.squareup.okhttp3:okhttp:$rootProject.okHttpVersion"
     api "com.tencent:mmkv:$rootProject.mmkvVersion"
     api "org.greenrobot:eventbus:$rootProject.eventBusVersion"
-    api "com.alibaba:fastjson:$rootProject.fastjsonVersion"   // fastjson
-
 
     // test
     testImplementation "junit:junit:$rootProject.junitVersion"

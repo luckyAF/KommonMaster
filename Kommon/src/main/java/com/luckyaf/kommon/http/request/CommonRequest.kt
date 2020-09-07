@@ -2,14 +2,16 @@ package com.luckyaf.kommon.http.request
 
 import android.os.Handler
 import android.os.Looper
-import com.alibaba.fastjson.JSONObject
 import com.google.gson.JsonObject
 import com.luckyaf.kommon.extension.mediaType
+import com.luckyaf.kommon.extension.saveToCache
 import com.luckyaf.kommon.extension.toJavaBean
+import com.luckyaf.kommon.extension.toJson
 import com.luckyaf.kommon.http.SmartHttp
 import com.luckyaf.kommon.http.callback.CommonCallback
 import com.luckyaf.kommon.http.callback.HttpCallback
 import com.luckyaf.kommon.http.internal.*
+import com.luckyaf.kommon.utils.GsonUtil
 import io.reactivex.Observable
 import kotlinx.coroutines.CompletableDeferred
 import okhttp3.*
@@ -343,13 +345,12 @@ data class CommonRequest(
     }
 
     private fun getJsonString(): String {
-        val jsonObject = JSONObject()
 
+        val jsonObject = JsonObject()
         mParams.forEach {
-
-            jsonObject[it.first] = it.second
+            jsonObject.add(it.first, GsonUtil.gson.toJsonTree(it.second))
         }
-        return jsonObject.toJSONString()
+        return jsonObject.toJson()
     }
 
     private fun isMultiPart() = mParams.any { it.second is File }
