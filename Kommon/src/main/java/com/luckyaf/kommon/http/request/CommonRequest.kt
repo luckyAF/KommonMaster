@@ -345,7 +345,6 @@ data class CommonRequest(
     }
 
     private fun getJsonString(): String {
-
         val jsonObject = JsonObject()
         mParams.forEach {
             jsonObject.add(it.first, GsonUtil.gson.toJsonTree(it.second))
@@ -356,8 +355,6 @@ data class CommonRequest(
     private fun isMultiPart() = mParams.any { it.second is File }
 
     fun commonCallback(f: () -> Unit) {
-        // todo fix
-        Thread.sleep(2000)
         if (backOnOldThread) {
             f.invoke()
         } else {

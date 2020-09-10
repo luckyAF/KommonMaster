@@ -11,7 +11,7 @@ def gitUrl = 'https://github.com/luckyAF/KommonMaster.git'   //Git仓库的地�
 
 group = "com.luckyaf"//发布aar前缀根节点
 
-version = "0.7" //发布aar的库版本
+version = "0.8" //发布aar的库版本
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -34,6 +34,11 @@ android {
     lintOptions {
         abortOnError false
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 
 }
 

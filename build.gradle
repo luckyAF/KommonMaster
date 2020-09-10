@@ -60,6 +60,11 @@ allprojects {
         maven { url "https://maven.google.com" }
         maven { url 'https://jitpack.io' }
     }
+    // 下面三行
+    tasks.withType(Javadoc) { // 新增
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
+    }
 
 }
 
