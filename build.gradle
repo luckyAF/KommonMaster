@@ -44,32 +44,13 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1' //添加此行
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
-
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        mavenCentral ()
-        maven { url "https://jitpack.io" }
-        maven {url 'https://dl.bintray.com/jetbrains/anko'} //这是你需要加入的，这个是解决这个问题的关键地方，我就是添加这个maven后不再报上面的错误了
-        maven {url "https://maven.google.com"} //谷歌广告
-
-    }
-    // 下面三行
-    tasks.withType(Javadoc) { // 新增
-        options.addStringOption('Xdoclint:none', '-quiet')
-        options.addStringOption('encoding', 'UTF-8')
-    }
-
-}
-
 
 
 task clean(type: Delete) {
