@@ -2,20 +2,31 @@
 //apply from: 'kommon.gradle'
 
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'maven-publish'
 
 
-def siteUrl = 'https://github.com/luckyAF/KommonMaster' //项目在github主页地址
-def gitUrl = 'https://github.com/luckyAF/KommonMaster.git'   //Git仓库的地址
-def localReleaseDest = "${buildDir}/release/${version}"
 
- group = "com.luckyaf"//发布aar前缀根节点
-def artifactId = "kommon"
- version = "0.71" //发布aar的库版本
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
+                // You can then customize attributes of the publication as shown below.
+                groupId = 'com.github.luckyaf'
+                artifactId = 'Kommon'
+                version = 'v1.0.0'
+            }
+        }
+    }
+}
+
+
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -39,113 +50,19 @@ android {
         abortOnError false
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility  JavaVersion.VERSION_11
+        targetCompatibility  JavaVersion.VERSION_11
     }
 
-
-}
-
-
-
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                name 'Kommon'//添加项目描述
-                url siteUrl
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id 'luckyAf'//设置自己ID
-                        name '项重飞'//设置自己名字
-                        email 'luckyaf1993@gmail.com'//设置自己邮箱
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
+    kotlinOptions {
+        jvmTarget = "11"
     }
+
 }
 
 
-////Maven本地仓库构建
-//uploadArchives {
-//    repositories.mavenDeployer {
-//        pom.groupId = group
-//        pom.artifactId = artifactId
-//        pom.version = version
-//        // Add other pom properties here if you want (developer details / licenses)
-//        repository(url: "file://${localReleaseDest}")
-//    }
-//}
 
 
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    failOnError false
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-//压缩为zip
-task zipRelease(type: Zip) {
-    from localReleaseDest
-    destinationDir buildDir
-    archiveName "release-${version}.zip"
-}
-//输出到本地补录，位于你的模块中的build下
-task generateRelease {
-    doLast {
-        println "Release ${version} can be found at ${localReleaseDest}/"
-        //注意此处，Windows系统需要加入\\转义符，Mac请去掉转义符"\\"
-        println "Release ${version} zipped can be found ${buildDir}release-${version}.zip"
-    }
-}
-
-//generateRelease.dependsOn(uploadArchives)
-//generateRelease.dependsOn(zipRelease)
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-    configurations = ['archives']
-    pkg {
-        repo = "Kommon" // 上传到maven库。（这里要特别注意，如果写了maven报404错误，请在bintray创建一个仓库，这里填改成你创建的仓库的名字
-        name = "Kommon" //项目在JCenter的名字
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true
-    }
-}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
