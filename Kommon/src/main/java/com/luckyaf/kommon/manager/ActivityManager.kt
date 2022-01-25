@@ -64,11 +64,13 @@ class ActivityManager:Application.ActivityLifecycleCallbacks {
         removeActivity(activity)
     }
 
-    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {
-    }
+
 
     override fun onActivityStopped(activity: Activity) {
         activityForGroundCount --
+    }
+
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {

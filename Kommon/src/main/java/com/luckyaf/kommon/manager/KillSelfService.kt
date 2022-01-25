@@ -42,7 +42,7 @@ class KillSelfService :Service(){
         val stopDelayed = intent.getLongExtra(RESTART_DELAYED, 2000)
         val packageName = intent.getStringExtra(PACKAGE_NAME)
         handler.postDelayed({
-            val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
+            val launchIntent = packageManager.getLaunchIntentForPackage(packageName?:"")
             startActivity(launchIntent)
             this@KillSelfService.stopSelf()
         }, stopDelayed)

@@ -33,8 +33,6 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -72,10 +70,10 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
     api "org.jetbrains.kotlin:kotlin-reflect:$rootProject.kotlinVersion"
 
+    api "com.android.support:support-annotations:$rootProject.androidSupportVsersion"
     api "com.android.support:appcompat-v7:$rootProject.androidSupportVsersion"
     api "com.android.support:cardview-v7:$rootProject.androidSupportVsersion"
     api "com.android.support:design:$rootProject.androidSupportVsersion"
-    api "com.android.support:support-annotations:$rootProject.androidSupportVsersion"
     api "com.android.support:recyclerview-v7:$rootProject.androidSupportVsersion"
     api "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
     api "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"

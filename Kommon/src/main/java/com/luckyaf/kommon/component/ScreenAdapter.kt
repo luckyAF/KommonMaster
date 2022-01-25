@@ -67,9 +67,9 @@ object ScreenAdapter {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             // 添加字体变化的监听
             application.registerComponentCallbacks(object : ComponentCallbacks {
-                override fun onConfigurationChanged(newConfig: Configuration?) {
+                override fun onConfigurationChanged(newConfig: Configuration) {
                     // 字体改变后,将 appScaledDensity 重新赋值
-                    if (newConfig != null && newConfig.fontScale > 0) {
+                    if (newConfig.fontScale > 0) {
                         matchInfo!!.appScaledDensity = application.resources.displayMetrics.scaledDensity
                     }
                 }
@@ -85,17 +85,15 @@ object ScreenAdapter {
     fun register( application: Application, designSize: Float, matchBase: Int, matchUnit: Int) {
         if (mActivityLifecycleCallback == null) {
             mActivityLifecycleCallback = object : ActivityLifecycleCallbacks{
-                override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
-                    if (activity != null) {
-                        match(activity, designSize, matchBase, matchUnit)
-                    }
+                override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                    match(activity, designSize, matchBase, matchUnit)
                 }
-                override fun onActivityStarted(activity: Activity?) {}
-                override fun onActivityResumed(activity: Activity?) {}
-                override fun onActivityPaused(activity: Activity?) {}
-                override fun onActivityStopped(activity: Activity?) {}
-                override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {}
-                override fun onActivityDestroyed(activity: Activity?) {}
+                override fun onActivityStarted(activity: Activity) {}
+                override fun onActivityResumed(activity: Activity) {}
+                override fun onActivityPaused(activity: Activity) {}
+                override fun onActivityStopped(activity: Activity) {}
+                override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+                override fun onActivityDestroyed(activity: Activity) {}
             }
             application.registerActivityLifecycleCallbacks(mActivityLifecycleCallback)
         }

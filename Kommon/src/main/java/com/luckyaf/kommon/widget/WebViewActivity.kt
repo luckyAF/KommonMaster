@@ -38,7 +38,7 @@ class WebViewActivity : AppCompatActivity() {
             context.startActivity(intent)
         }
     }
-    private var mUrl: String? = null
+    private var mUrl: String = ""
     private  var mWebView: WebView?= null
     private lateinit var mToolbar: Toolbar
     private lateinit var mProgressBar: ProgressBar
@@ -48,7 +48,7 @@ class WebViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kommon_webview)
-        mUrl = intent.getStringExtra(KEY_INTENT_URL)
+        mUrl = intent.getStringExtra(KEY_INTENT_URL)?:""
         initView()
         initWebView()
         initWebSettings()
@@ -198,7 +198,7 @@ class WebViewActivity : AppCompatActivity() {
             //=========多窗口的问题==========================================================
             override fun onCreateWindow(view: WebView, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message): Boolean {
                 val result = view.hitTestResult
-                val data = result.extra
+                val data = result.extra?:""
                 mWebView?.loadUrl(data)
                 return true
             }
@@ -282,7 +282,6 @@ class WebViewActivity : AppCompatActivity() {
         mWebView?.loadUrl("about:blank")
         mWebView?.stopLoading()
         mWebView?.webChromeClient = null
-        mWebView?.webViewClient = null
         mWebView?.destroy()
         mWebView = null
     }
