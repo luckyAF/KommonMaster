@@ -1,11 +1,12 @@
 ////在你要发布的模块build.gradle中头部配置
 //apply from: 'kommon.gradle'
 
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'maven-publish'
+plugins {
+    id "com.android.library"
+    id "kotlin-android"
+    id "kotlin-kapt"
+    id "maven-publish"
+}
 
 
 
@@ -26,6 +27,11 @@ afterEvaluate {
     }
 }
 
+//        ./gradlew publishToMavenLocal
+//
+//// or if you named your publication "release"
+//./gradlew publishReleasePublicationToMavenLocal
+
 
 
 android {
@@ -44,9 +50,7 @@ android {
 
         }
     }
-    lintOptions {
-        abortOnError false
-    }
+
     compileOptions {
         sourceCompatibility  JavaVersion.VERSION_11
         targetCompatibility  JavaVersion.VERSION_11
