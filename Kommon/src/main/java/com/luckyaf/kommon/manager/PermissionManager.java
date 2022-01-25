@@ -30,7 +30,7 @@ public class PermissionManager {
      * 当前应用的所有权限列表
      */
     private static final List<String> PERMISSIONS = PermissionUtil.getManifestPermissions();
-    private static final String TAG = BuildConfig.APPLICATION_ID + PermissionManager.class.getSimpleName();
+    private static final String TAG = BuildConfig.LIBRARY_PACKAGE_NAME + PermissionManager.class.getSimpleName();
 
     private Set<String> mPermissions;
     private FragmentManager fragmentManager;

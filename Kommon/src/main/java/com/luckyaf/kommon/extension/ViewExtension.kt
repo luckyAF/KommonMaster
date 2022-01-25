@@ -69,7 +69,7 @@ private fun View.upToGrade(needClick:Int):Boolean{
     val currentClickTime = System.currentTimeMillis()
     if (currentClickTime - triggerFirstTime >= timeLimit) {
         triggerFirstTime = currentClickTime
-        targetClickTime = 0
+        targetClickTime = 1
         return false
     }else{
         return targetClickTime == needClick
@@ -101,10 +101,11 @@ fun View.clickWithTrigger(time: Long = 600, block: (View) -> Unit){
  * @return Unit
  */
 @Suppress("UNCHECKED_CAST")
-fun View.mulitClick(time: Long = 600,number:Int=3, block: (View) -> Unit){
+fun View.multiClick(time: Long = 600,number:Int=3, block: (View) -> Unit){
     timeLimit = time
     setOnClickListener {
         if (upToGrade(number)) {
+            targetClickTime = 0
             block(it)
         }
     }

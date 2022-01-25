@@ -1,3 +1,6 @@
+////在你要发布的模块build.gradle中头部配置
+//apply from: 'kommon.gradle'
+
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
@@ -8,10 +11,11 @@ apply plugin: 'kotlin-kapt'
 
 def siteUrl = 'https://github.com/luckyAF/KommonMaster' //项目在github主页地址
 def gitUrl = 'https://github.com/luckyAF/KommonMaster.git'   //Git仓库的地址
+def localReleaseDest = "${buildDir}/release/${version}"
 
-group = "com.luckyaf"//发布aar前缀根节点
-
-version = "0.8" //发布aar的库版本
+ group = "com.luckyaf"//发布aar前缀根节点
+def artifactId = "kommon"
+ version = "0.71" //发布aar的库版本
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -74,6 +78,20 @@ install {
         }
     }
 }
+
+
+////Maven本地仓库构建
+//uploadArchives {
+//    repositories.mavenDeployer {
+//        pom.groupId = group
+//        pom.artifactId = artifactId
+//        pom.version = version
+//        // Add other pom properties here if you want (developer details / licenses)
+//        repository(url: "file://${localReleaseDest}")
+//    }
+//}
+
+
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
@@ -89,6 +107,24 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
+
+//压缩为zip
+task zipRelease(type: Zip) {
+    from localReleaseDest
+    destinationDir buildDir
+    archiveName "release-${version}.zip"
+}
+//输出到本地补录，位于你的模块中的build下
+task generateRelease {
+    doLast {
+        println "Release ${version} can be found at ${localReleaseDest}/"
+        //注意此处，Windows系统需要加入\\转义符，Mac请去掉转义符"\\"
+        println "Release ${version} zipped can be found ${buildDir}release-${version}.zip"
+    }
+}
+
+//generateRelease.dependsOn(uploadArchives)
+//generateRelease.dependsOn(zipRelease)
 
 artifacts {
     archives javadocJar
@@ -113,8 +149,7 @@ bintray {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-
+    api 'com.android.support:multidex:1.0.3'
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.kotlinCoroutinesVersion"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.kotlinCoroutinesVersion"
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"

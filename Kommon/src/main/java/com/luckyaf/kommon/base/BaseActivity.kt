@@ -14,6 +14,7 @@ import android.content.Context
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.support.annotation.NonNull
 import android.support.annotation.RequiresPermission
 import com.luckyaf.kommon.R
 import com.luckyaf.kommon.utils.KeyboardUtil
@@ -47,12 +48,12 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     /**
      * 初始化数据
      */
-    abstract fun initData(bundle: Bundle)
+    abstract fun initData(@NonNull bundle: Bundle)
 
     /**
      * 初始化数据后 初始化VIew
      */
-    abstract fun initView(savedInstanceState: Bundle, contentView: View)
+    abstract fun initView(@NonNull savedInstanceState: Bundle,@NonNull  contentView: View)
 
     /**
      * 页面展示，可以请求数据了

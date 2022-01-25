@@ -18,7 +18,6 @@ import javax.security.auth.login.LoginException
  */
 @Suppress("unused")
 object Logger {
-
     private const val TOP_LEFT_CORNER = '╔'
     private const val BOTTOM_LEFT_CORNER = '╚'
     private const val MIDDLE_CORNER = '╟'
@@ -29,7 +28,7 @@ object Logger {
     private val BOTTOM_BORDER = BOTTOM_LEFT_CORNER + HORIZONTAL_DOUBLE_LINE + HORIZONTAL_DOUBLE_LINE
     private val MIDDLE_BORDER = MIDDLE_CORNER + SINGLE_LINE + SINGLE_LINE
 
-    private const val TAG = BuildConfig.APPLICATION_ID
+    private const val TAG = BuildConfig.LIBRARY_PACKAGE_NAME
     private var debug = Kommon.DEBUG//是否打印log
     private var timeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
 
