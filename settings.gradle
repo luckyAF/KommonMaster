@@ -8,5 +8,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "KommonMaster"
-include ':app'
+//include ':app'
 include ':kommon'

@@ -44,7 +44,7 @@ kapt {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //implementation "com.luckyaf:kommon:0.4.1"
-    implementation project(":kommon")
+    //implementation project(":kommon")
 }
 
 
