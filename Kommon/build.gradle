@@ -1,11 +1,10 @@
 ////在你要发布的模块build.gradle中头部配置
 //apply from: 'kommon.gradle'
-
 plugins {
-    id "com.android.library"
-    id "kotlin-android"
-    id "kotlin-kapt"
-    id "maven-publish"
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'maven-publish'
 }
 
 
